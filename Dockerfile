@@ -1,12 +1,12 @@
 FROM node:18 AS build
 
-WORKDIR /app/client
+WORKDIR /app/Client
 
-COPY client/package*.json ./
+COPY Client/package*.json ./
 
 RUN npm install
 
-COPY client/ .
+COPY Client/ .
 
 RUN npm run lint -- --fix
 RUN npm run build
@@ -21,7 +21,7 @@ RUN apt update && apt upgrade -y
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY --from=build /app/client/dist ./static
+COPY --from=build /app/Client/dist ./static
 
 EXPOSE 5000
 
