@@ -6,7 +6,7 @@ class BaseConfig:
     HOST_NAME = os.getenv("HOST_NAME", 'localhost')
     APP_PORT = os.getenv("APP_PORT", 5000)
 
-    MONGO_DATABASE = os.getenv("MONGO_DATABASE", 'mongodb://localhost:27017')
+    MONGO_DATABASE = os.getenv("MONGO_DATABASE", 'remyrecipex')
     MONGO_URI = os.getenv("MONGO_URI", 'mongodb://localhost:27017')
 
     CORS_SUPPORTS_CREDENTIALS = os.getenv("CORS_SUPPORTS_CREDENTIALS", 'false')
