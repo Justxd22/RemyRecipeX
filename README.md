@@ -1,6 +1,6 @@
 # RemyRecipeX
 
-![s1](Client/src/assets/Images/Text_Logo.png)
+![LOGO](Client/src/assets/Images/Text_Logo.png)
 
 ## Live
 
@@ -34,17 +34,13 @@
 ## Features
 
 - User authentication (register, login, logout)
-- Real-time multiplayer gameplay
-- Leaderboard system
-- Game history tracking
 - Responsive design for various screen sizes
 
 ## Technology Stack
 
 - Backend: Flask (Python)
 - Database: MongoDB
-- Real-time Communication: Socket.IO
-- Frontend: HTML, CSS, JavaScript (details may vary based on your implementation)
+- Frontend: React + vite + TS + Tailwindcss
 - Authentication: Flask sessions
 - WSGI Server: Gunicorn
 - Web Server: Nginx (for production deployment)
@@ -53,61 +49,100 @@
 
 ```text
 RemyRecipeX/
-│
-├── .env
-├── .gitignore
-├── app.py
-├── backend.Dockerfile
-├── database.py
-├── docker-compose.yml
-├── errors.py
-├── example-dotenv-file
-├── middleware.py
-├── requirements.txt
+.
+├── Client
+│   ├── README.md
+│   ├── dist
+│   │   ├── assets
+│   │   │   ├── index-BStUhQb-.js
+│   │   │   ├── index-DiwrgTda.css
+│   │   │   └── react-CHdo91hT.svg
+│   │   └── index.html
+│   ├── eslint.config.js
+│   ├── index.html
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── public
+│   ├── src
+│   │   ├── App.css
+│   │   ├── App.tsx
+│   │   ├── assets
+│   │   │   ├── react.svg
+│   │   │   └── vite.svg
+│   │   ├── index.css
+│   │   ├── main.tsx
+│   │   └── vite-env.d.ts
+│   ├── tsconfig.app.json
+│   ├── tsconfig.app.tsbuildinfo
+│   ├── tsconfig.json
+│   ├── tsconfig.node.json
+│   ├── tsconfig.node.tsbuildinfo
+│   └── vite.config.ts
+├── Dockerfile
+├── LICENSE
+├── README.md
+└── Server
+    ├── api
+    │   ├── __init__.py
+    │   └── routes
+    │       ├── __init__.py
+    │       ├── auth_routes.py
+    │       ├── gpt_routes.py
+    │       └── user_routes.py
+    ├── app.py
+    ├── config
+    │   ├── __init__.py
+    │   └── default.py
+    ├── database.py
+    ├── errors.py
+    ├── example-dotenv-file
+    ├── middleware.py
+    ├── models
+    │   ├── __init__.py
+    │   ├── auth.py
+    │   └── user.py
+    ├── mongo-init.js
+    ├── requirements.txt
+    ├── static
+    │   ├── assets
+    │   │   ├── index-DiwrgTda.css
+    │   │   ├── index-f40OySzR.js
+    │   │   ├── react-CHdo91hT.svg
+    │   │   └── vite.svg
+    │   └── index.html
+    └── web_dynamic
+        ├── __init__.py
+        └── template_renderer.py
+
+14 directories, 49 files
 ```
 
 ## Setup and Installation
 
 1. Clone the repository:
-
    ```sh
    git clone https://github.com/0x3mr/RemyRecipeX
    cd RemyRecipeX
    ```
-
-2. Set up a virtual environment:
-
-   ```sh
-   python -m venv venv
-   source venv/bin/activate  # On Windows use venv\Scripts\activate
-   ```
-
-   For me I'm using virtualenvwrapper, It's cool. Give it a try: [virtualenvwrapper](https://pypi.org/project/virtualenvwrapper/)
-
-3. Install the required packages:
-
-   ```sh
-   pip install -r requirements.txt
-   ```
-
-4. Set up MongoDB:
-
+2. Set up MongoDB:
    - Install MongoDB on your system
-   - Initialize it with username and password, if needed.
 
-5. Set up environment variables:
-   Create a `.env` file in the root directory to add your env variables. [example file](./server/example-dotenv-file)
+3. Set up environment variables:
+   Create a `.env` file in the root directory to add your env variables. [example file](./Server/example-dotenv-file)
+
+4. Docker build:
+   ```sh
+   docker build -t remyrecipex .
+   ```
+
 
 ## Running the Application
 
-For development:
-
 ```sh
-python app.py
+docker run -p 5000:5000 remyrecipex
 ```
 
-
-For production, refer to the Deployment section.
+Enjoy :D
 
 ## API Endpoints
 
@@ -120,16 +155,9 @@ For production, refer to the Deployment section.
 ### User Collection
 
 - `_id`: ObjectId
-- `username`: String
+- `name`: String
 - `email`: String
 - `password`: String (hashed)
-- `wins`: Integer
-- `losses`: Integer
-- `draws`: Integer
-- `game_played`: Integer
-- `score`: Integer
-- `created_at`: DateTime
-- `avatar`: String (URL)
 
 
 ## Configuration
