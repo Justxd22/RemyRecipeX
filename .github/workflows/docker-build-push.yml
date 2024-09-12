@@ -38,9 +38,3 @@ jobs:
           --tag justxd22/remyrecipex:${{ github.sha }} \
           --push \
           .
-    
-    
-    - name: Push Docker image
-      run: |
-        docker push justxd22/remyrecipex:latest
-        docker push justxd22/remyrecipex:${{ github.sha }}
