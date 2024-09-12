@@ -15,12 +15,13 @@ def auth_middleware(app):
             url_for('web_dynamic.login'),
             url_for('auth.users'),
             url_for('auth.login'),
+            url_for('gpt.model'),
             url_for('web_dynamic.home'),
             url_for('web_dynamic.status'),
             ]
 
         # Check if the user is logged in
-        is_logged_in = 'username' in session
+        is_logged_in = 'email' in session
 
         # Get the current path
         current_path = request.path
