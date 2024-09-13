@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 import { FaUser, FaLock, FaTimes } from "react-icons/fa";
-import { IoChevronBack, IoChevronForward } from "react-icons/io5"; // New import for modern icons
+// import { IoChevronBack, IoChevronForward } from "react-icons/io5"; // New import for modern icons
 import { TbArrowBadgeRightFilled, TbArrowBadgeLeftFilled } from "react-icons/tb";
 import '../assets/stylesheets/Home.css';
 import LogoN from '../assets/images/LogoN.png';
