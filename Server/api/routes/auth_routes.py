@@ -73,9 +73,9 @@ def users():
 def check_session():
     """Check session status."""
     if 'email' in session:
-        return jsonify({"message": True}), 200
+        return jsonify({"code": 1}), 200
     else:
-        return jsonify({"message": False}), 400
+        return jsonify({"code": 0}), 400
 
 def init_auth_routes(auth):
     global AUTH
