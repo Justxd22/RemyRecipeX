@@ -1,6 +1,6 @@
 # RemyRecipeX
 
-![LOGO](Client/src/assets/Images/Text_Logo.png)
+![LOGO](Client/src/assets/images/Logo.png)
 
 ## Live
 
