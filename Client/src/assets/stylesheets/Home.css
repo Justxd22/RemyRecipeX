@@ -207,6 +207,7 @@ body {
     justify-content: center;
     backdrop-filter: blur(10px);
     z-index: 1000; /* Ensure it's above other content */
+    animation: fadeIn 0.5s ease-in-out;
   }
   
   .modal-content {
@@ -222,9 +223,19 @@ body {
     border-radius: 30px;
     padding: 30px 40px;
     box-shadow: 0 0 30px 30px rgb(204 149 108 / 41%);
+    animation: fadeIn 0.5s ease-in-out;
     /* margin-top: 245px;  */
   }
   
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
   .close-modal {
     position: relative;
     font-size: 18px;
