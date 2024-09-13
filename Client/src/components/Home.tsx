@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import { FaUser, FaLock } from "react-icons/fa";
+import { FaUser, FaLock, FaTimes } from "react-icons/fa";
 import '../assets/stylesheets/Home.css';
 // import Logo from '../assets/images/Logo.png';
 import LogoN from '../assets/images/LogoN.png';
@@ -9,7 +9,7 @@ import suggestion2 from '../assets/images/suggestion2.png';
 import suggestion3 from '../assets/images/suggestion3.png';
 import suggestion4 from '../assets/images/suggestion4.png';
 
-const typingTexts = [
+let typingTexts = [
   "Let's cook!",
   "What are you thinking of?",
   "Give ingredients, receive recipes!",
@@ -30,13 +30,24 @@ const Home: FC = () => {
 
 
   useEffect(() => {
+    async function getName() {
+      const res = await fetch('/api/user/profile', { credentials: 'same-origin' });
+      const data = await res.json();
+      console.log(data);
+      if (data.name) {
+        setName(data.name);
+        for (let i = 0; i < typingTexts.length; i++) {
+          typingTexts[i] = `Hey ${data.name}, ${typingTexts[i]}`;
+        }
+      }
+    }
     async function isValid() {
         const res = await fetch('/api/auth/check-session', { credentials: 'same-origin' });
         const data = await res.json();
         console.log(data);
         if (data.code === 1) {
           setIsLoggedIn(true);
-          // setShowModal(false);
+          getName();
         }
     }
     isValid();
@@ -196,7 +207,7 @@ const handleRegisterSubmit = async (e: React.FormEvent) => {
         <div className="modal-overlay">
           <div className="modal-content">
           <form onSubmit={handleSubmit}>
-            <button type="button" className="close-modal" onClick={handleModalClose}>X</button>
+            <button type="button" className="close-modal" onClick={handleModalClose}><FaTimes className="icon" /></button>
             <h1>Login</h1>
             <div className="input-box">
               <input type="text" placeholder="Email" required value={email} onChange={(e) => setEmail(e.target.value)} />
