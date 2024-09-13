@@ -72,81 +72,100 @@ body {
     height: 90px;
     border-radius: 50px;
     border: 0px solid #a66d2d;
-    background: linear-gradient(to bottom, rgba(123, 73, 32, 0.6), rgba(194, 180, 134, 0.1));
+    background: linear-gradient(to bottom, rgba(200, 119, 53, 0.6), rgba(194, 180, 134, 0.0));
     color: #ffffff;
     text-align: left;
     font-size: 35px;
     padding-left: 25px;
     padding-right: 25px;
-    font-family: 'TheSecret', sans-serif;
-    box-shadow: 0 1px 25px rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(5px);
+    font-family: 'Antreas', sans-serif;
+    /* letter-spacing: 1px; */
+    box-shadow: 0 -10px 10px rgba(0, 0, 0, 0.15);
+    /* backdrop-filter: blur(5px); */
 
+}
+
+.custom-placeholder::placeholder {
+  color: #fde6b5;
 }
 
 .suggestionsContainer {
-    position: absolute;
-    top: calc(50% + 60px);
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    justify-content: space-around;
-    width: 60%;
-    padding-bottom: 30px;
-    background: linear-gradient(to top, rgba(189, 136, 93, 0.8), rgba(194, 180, 134, 0.0));
-    box-shadow: 0 12px 12px rgba(0, 0, 0, 0.4);
-    border-radius: 35px;
-    z-index: 1;
-    backdrop-filter: blur(5px);
-
+  position: absolute;
+  top: calc(50% + 150px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: space-around;
+  width: 60%;
+  padding: 30px 0; /* Removed left and right padding */
+  background: linear-gradient(to top, rgba(238, 171, 117, 0.8), rgba(194, 180, 134, 0.0));
+  box-shadow: 0 12px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 35px;
+  z-index: 1;
+  overflow: hidden;
 }
 
 .suggestion {
-    text-align: center;
-    padding-right: 20px;
-    padding-left: 20px;
+  text-align: center;
+  padding-right: 20px;
+  padding-left: 20px;
+  transition: transform 0.5s ease;
 }
 
 .suggestion:hover {
-    transform: translateY(-10px); /* Move element upwards */
-    box-shadow: 0 -5px 22px 0 rgba(0, 0, 0, 0.3);
-    /* box-shadow: -10px 0 10px rgba(0, 0, 0, 0.4), 10px 0 10px rgba(0, 0, 0, 0.4); */
+  transform: translateY(-10px);
 }
 
 .suggestion img {
-    width: 200px;
-    height: 200px;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 .suggestion p {
-    margin-top: 5px;
-    font-size: 14px;
-    color: #fff9ea;
-    padding-right: 10px;
-    padding-left: 10px;
+  margin-top: 5px;
+  font-size: 14px;
+  padding-right: 10px;
+  padding-left: 10px;
+  
+  /* Apply gradient text color */
+  color: #ffe4b1;
+  font-family: 'Antreas', sans-serif;
 }
 
 @font-face {
-    font-family: 'Antreas';
-    src: url('../fonts/Antreas.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'TheSecret';
+    font-family: 'Clockwise';
     src: url('../fonts/clockwise_light.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
+@font-face {
+  font-family: 'CherryRustic';
+  src: url('../fonts/CherryRustic.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ShantellSans';
+  src: url('../fonts/ShantellSans-VariableFont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .suggestion h3 {
-    font-family: 'Antreas', sans-serif;
-    color: #ffd17d;
+    font-family: 'CherryRustic', sans-serif;
+    background: linear-gradient(to top, #ffe2ab, #efc578);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     font-size: 36px;
-    padding-bottom: 0px;
+    margin-bottom: 0px;
     letter-spacing: 2px;
     text-shadow: 1px 0px 20px rgba(0, 0, 0, 0.3);
+    font-weight: 400;
+    /* text-transform: uppercase; */
 }
 
 .suggestion button {
@@ -167,15 +186,71 @@ body {
     border-color: rgba(255, 255, 255, 0.9);
 }
 
+.sliderButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(700%);
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  z-index: 2;
+}
+
+.sliderButton:hover {
+  background: rgba(255, 255, 255, 0);
+}
+
+.sliderButton.left {
+  left: 300px;
+}
+
+.sliderButton.right {
+  right: 300px;
+}
+
+.sliderButton svg {
+  font-size: 50px;
+  color: #ffffff;
+}
+
+@keyframes slideLeft {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.sliding-left {
+  animation: slideLeft 0.5s ease forwards;
+}
+
+.sliding-right {
+  animation: slideRight 0.5s ease forwards;
+}
+
 .typing {
     border-right: 2px solid #a66d2d;
     white-space: nowrap;
     overflow: hidden;
     animation: typing 4s steps(30, end), blink 0.75s step-end infinite;
-}
-
-.custom-placeholder::placeholder {
-  color: #ffffff;
 }
 
 @keyframes typing {
@@ -192,8 +267,6 @@ body {
         border-color: transparent;
     }
 }
-
-
 
 .modal-overlay {
     position: fixed;

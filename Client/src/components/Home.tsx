@@ -1,19 +1,35 @@
 import React, { FC, useState, useEffect } from 'react';
 import { FaUser, FaLock, FaTimes } from "react-icons/fa";
+import { IoChevronBack, IoChevronForward } from "react-icons/io5"; // New import for modern icons
+import { TbArrowBadgeRightFilled, TbArrowBadgeLeftFilled } from "react-icons/tb";
 import '../assets/stylesheets/Home.css';
-// import Logo from '../assets/images/Logo.png';
 import LogoN from '../assets/images/LogoN.png';
 import text from '../assets/images/text.png';
 import suggestion1 from '../assets/images/suggestion1.png';
 import suggestion2 from '../assets/images/suggestion2.png';
 import suggestion3 from '../assets/images/suggestion3.png';
 import suggestion4 from '../assets/images/suggestion4.png';
+import suggestion5 from '../assets/images/suggestion5.png';
+import suggestion6 from '../assets/images/suggestion6.png';
+import suggestion7 from '../assets/images/suggestion7.png';
+import suggestion8 from '../assets/images/suggestion8.png';
 
 let typingTexts = [
   "Let's cook!",
   "What are you thinking of?",
   "Give ingredients, receive recipes!",
   "What's on your mind?"
+];
+
+const suggestions = [
+  { title: "Chicken Maratha", image: suggestion1 },
+  { title: "Sweet & Sour", image: suggestion2 },
+  { title: "Bacon", image: suggestion3 },
+  { title: "Rice", image: suggestion4 },
+  { title: "Pasta", image: suggestion5 }, // Add more suggestions as needed
+  { title: "Salad", image: suggestion6 },
+  { title: "Burger", image: suggestion7 },
+  { title: "Pizza", image: suggestion8 },
 ];
 
 const Home: FC = () => {
@@ -52,6 +68,8 @@ const Home: FC = () => {
     }
     isValid();
   }, []);
+
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     if (inputValue !== '') {
@@ -100,6 +118,23 @@ const Home: FC = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
+  };
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % suggestions.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + suggestions.length) % suggestions.length);
+  };
+
+  const getVisibleSuggestions = () => {
+    const visibleSuggestions = [];
+    for (let i = 0; i < 4; i++) {
+      const index = (currentIndex + i) % suggestions.length;
+      visibleSuggestions.push(suggestions[index]);
+    }
+    return visibleSuggestions;
   };
 
   const handleInputFocus = () => {
@@ -256,31 +291,19 @@ const handleRegisterSubmit = async (e: React.FormEvent) => {
 
       )}
       <div className="suggestionsContainer">
-        <div className="suggestion">
-          <h3>Ratatouille</h3>
-          <img src={suggestion1} alt="Food 1" />
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-          <button>Try Recipe!</button>
-        </div>
-        <div className="suggestion">
-          <h3>Tikka Masala</h3>
-          <img src={suggestion2} alt="Food 2" />
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-          <button>Try Recipe!</button>
-        </div>
-        <div className="suggestion">
-          <h3>Karaikudi Curry</h3>
-          <img src={suggestion3} alt="Food 3" />
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-          <button>Try Recipe!</button>
-        </div>
-        <div className="suggestion">
-          <h3>Noodles</h3>
-          <img src={suggestion4} alt="Food 4" />
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-          <button>Try Recipe!</button>
-        </div>
+        {getVisibleSuggestions().map((suggestion, index) => (
+          <div key={index} className="suggestion">
+            <h3>{suggestion.title}</h3>
+            <img src={suggestion.image} alt={suggestion.title} />
+          </div>
+        ))}
       </div>
+      <button className="sliderButton left" onClick={prevSlide}>
+        <TbArrowBadgeLeftFilled />
+      </button>
+      <button className="sliderButton right" onClick={nextSlide}>
+        <TbArrowBadgeRightFilled />
+      </button>
     </div>
   );
 };
