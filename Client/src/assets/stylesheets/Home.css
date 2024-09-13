@@ -217,10 +217,11 @@ body {
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
     width: 420px;
-    background: #7c6141d6;
+    background: rgb(176 127 90 / 80%);;
     color: white;
     border-radius: 30px;
     padding: 30px 40px;
+    box-shadow: 0 0 30px 30px rgb(204 149 108 / 41%);
     /* margin-top: 245px;  */
   }
   
