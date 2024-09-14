@@ -1,22 +1,22 @@
-import { FC, useState, useEffect } from "react";
-import {
-  APIProvider,
-  Map,
-  AdvancedMarker,
-  Pin,
-  InfoWindow,
-} from "@vis.gl/react-google-maps";
-import "../assets/stylesheets/Solution.css";
+// import { FC, useState, useEffect } from "react";
+// import {
+//   APIProvider,
+//   Map,
+//   AdvancedMarker,
+//   Pin,
+//   InfoWindow,
+// } from "@vis.gl/react-google-maps";
+// import "../assets/stylesheets/Solution.css";
 
-const Solution: FC = () => {
-  const [suggestion, setSuggestion] = useState(null);
-  const [position, setPosition]= useState()
+// const Solution: FC = () => {
+//   const [suggestion, setSuggestion] = useState(null);
+//   const [position, setPosition]= useState(null)
 
-  return (
-    <APIProvider apiKey="">
+//   return (
+//     <APIProvider apiKey="">
 
-    </APIProvider>
-  );
-};
+//     </APIProvider>
+//   );
+// };
 
-export default Solution;
+// export default Solution;
