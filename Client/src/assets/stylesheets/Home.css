@@ -190,7 +190,7 @@ body {
   position: absolute;
   top: 50%;
   transform: translateY(700%);
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0);
   border: none;
   border-radius: 50%;
   width: 40px;
@@ -201,18 +201,24 @@ body {
   cursor: pointer;
   transition: background 0.3s ease;
   z-index: 2;
+  transform: scale(4.5) translateY(180%);
 }
 
-.sliderButton:hover {
-  background: rgba(255, 255, 255, 0);
+.sliderButton.left:hover {
+  left: 180px;
+  transition: left 0.3s ease;
+}
+.sliderButton.right:hover {
+    right: 180px;
+    transition: right 0.3s ease;
 }
 
 .sliderButton.left {
-  left: 300px;
+  left: 200px;
 }
 
 .sliderButton.right {
-  right: 300px;
+  right: 200px;
 }
 
 .sliderButton svg {
