@@ -4,8 +4,8 @@
 
 ## Live
 
-[remyrecipex.up.railway.app](https://remyrecipes.up.railway.app/)
-[remyrecipex.up.railway.app](https://remyrecipex.up.railway.app/)
+- [remyrecipes.up.railway.app](https://remyrecipes.up.railway.app/)  
+- [remyrecipex.up.railway.app](https://remyrecipex.up.railway.app/) (backup)
 
 
 ## Screenshots
