@@ -339,8 +339,11 @@ body {
   }
 
   .close-modal {
+    display: flex;
     position: relative;
     font-size: 18px;
+    align-items: center;
+    justify-content: center;
     width: 45px;
     height: 45px;
     background: white;

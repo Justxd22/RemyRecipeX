@@ -10,6 +10,7 @@ import LogoN from "../assets/images/LogoN.png";
 import text from "../assets/images/text.png";
 import LoginModal from "./LoginModal";
 import RegisterModal from "./RegisterModal";
+import RecipeModal, { Recipe } from "./RecipeModal";
 import suggestion1 from "../assets/images/suggestion1.png";
 import suggestion2 from "../assets/images/suggestion2.png";
 import suggestion3 from "../assets/images/suggestion3.png";
@@ -18,6 +19,7 @@ import suggestion5 from "../assets/images/suggestion5.png";
 import suggestion6 from "../assets/images/suggestion6.png";
 import suggestion7 from "../assets/images/suggestion7.png";
 import suggestion8 from "../assets/images/suggestion8.png";
+import Spinner from "./Spinner";
 
 const typingTexts = [
   "Let's cook!",
@@ -39,7 +41,10 @@ const suggestions = [
 
 const Home: FC = () => {
   const [inputValue, setInputValue] = useState("");
+  const [loading, setLoading] = useState(false); // New loading state
   const [placeholderText, setPlaceholderText] = useState("");
+  const [recipeData, setRecipeData] = useState<Recipe | null>(null);
+  const [showRecipeModal, setShowRecipeModal] = useState(false);
   const [textIndex, setTextIndex] = useState(0);
   const [animationPhase, setAnimationPhase] = useState<
     "typing" | "pause" | "deleting" | "waiting"
@@ -176,6 +181,10 @@ const Home: FC = () => {
     setShowRegisterModal(false);
   };
 
+  const closeRecipeModal = () => {
+    setShowRecipeModal(false);
+  };
+
   const handleModalClose = () => {
     setShowModal(false);
     setShowRegisterModal(false);
@@ -238,6 +247,7 @@ const Home: FC = () => {
   };
 
   const handleSearchClick = async () => {
+    setLoading(true); // Set loading to true when search starts
     try {
       const response = await fetch("/api/gpt/ask", {
         method: "POST",
@@ -245,7 +255,6 @@ const Home: FC = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ input: inputValue }),
-        // credentials: 'include', // Include credentials to save cookies, only in cross-origin requests
         credentials: "same-origin", //only for same-origin requests
       });
 
@@ -253,13 +262,18 @@ const Home: FC = () => {
 
       if (response.ok) {
         console.log("Answer successful:", data);
-        alert(data);
+        setRecipeData(data); // Store the received data
+        setLoading(false); // Stop loading when data is received
+        setShowRecipeModal(true); // Show the modal once data is ready
+        alert(data); //For Testing
       } else {
         console.error(" failed:", data.message);
+        setLoading(false); // Stop loading if the request fails
         alert(` failed: ${data.message}`);
       }
     } catch (error) {
       console.error("Error occurred:", error);
+      setLoading(false); // Stop loading on error
     }
   };
 
@@ -293,7 +307,6 @@ const Home: FC = () => {
           openRegisterModal={openRegisterModal}
         />
       )}
-
       {showRegisterModal && (
         <RegisterModal
           name={name}
@@ -309,6 +322,14 @@ const Home: FC = () => {
             setShowModal(true);
           }}
         />
+      )}
+      {/* Loading Spinner */}
+      {loading && <Spinner />} {/* Show loading spinner while fetching data */}
+      {showRecipeModal && recipeData && (
+        <>
+          {console.log("Modal is being triggered")} {/* Add a debug log */}
+          <RecipeModal recipe={recipeData} onClose={closeRecipeModal} />
+        </>
       )}
       <div className="suggestionsContainer">
         {getVisibleSuggestions().map((suggestion, index) => (
