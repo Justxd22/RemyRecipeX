@@ -6,3 +6,4 @@ Flask-Session
 python-dotenv
 gunicorn
 regex
+google-generativeai

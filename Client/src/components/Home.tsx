@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import { FaUser, FaLock, FaTimes } from "react-icons/fa";
+import { FaUser, FaLock, FaTimes, FaArrowRight } from "react-icons/fa";
 // import { IoChevronBack, IoChevronForward } from "react-icons/io5"; // New import for modern icons
 import { TbArrowBadgeRightFilled, TbArrowBadgeLeftFilled } from "react-icons/tb";
 import '../assets/stylesheets/Home.css';
@@ -224,6 +224,33 @@ const handleRegisterSubmit = async (e: React.FormEvent) => {
   }
 };
 
+
+  const handleSearchClick = async () => { 
+    try {
+      const response = await fetch('/api/gpt/ask', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ input: inputValue }),
+          // credentials: 'include', // Include credentials to save cookies, only in cross-origin requests
+          credentials: 'same-origin', //only for same-origin requests
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+          console.log('Answer successful:', data);
+          alert(data);
+      } else {
+          console.error(' failed:', data.message);
+          alert(` failed: ${data.message}`);
+      }
+  } catch (error) {
+      console.error('Error occurred:', error);
+  }
+  }
+
   return (
     <div className="homeContainer">
       {/* <img src={Logo} alt="Logo" className="homeLogo" /> */}
@@ -238,6 +265,11 @@ const handleRegisterSubmit = async (e: React.FormEvent) => {
         onBlur={handleInputBlur}
         placeholder={inputValue === '' ? placeholderText : ''}
       />
+      {inputValue && (
+      <div onClick={handleSearchClick}>
+        <FaArrowRight className="search-icon" />
+      </div>
+      )}
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-content">
