@@ -1,6 +1,8 @@
 """This to implement gpt routes"""
 from flask import Blueprint, jsonify, request, session
-# import openai stuff
+from .gemi import GEmeni
+
+gem = GEmeni()
 gpt_bp = Blueprint('gpt', __name__)
 
 @gpt_bp.route("/model", methods=["GET"])
@@ -13,3 +15,22 @@ def model():
     email = session.get('email')
     user_info = USER.get_info(email)
     return jsonify(user_info), 200
+
+# chat_session.send_message("tomato, rice, green salad, cheese, cooked chicken, corn")
+
+
+@gpt_bp.route("/ask", methods=["POST"])
+def ask():
+    """Retrieve receipi info."""
+    if 'email' not in session:
+        return jsonify({"message": "Not logged in"}), 400
+    data = request.get_json(silent=True)
+    if data is None:
+        return jsonify({"message": "missing parameters"}), 400
+    ingred = data.get("input")
+    if not ingred:
+        return jsonify({"message": "missing parameters"}), 400
+
+    ans = gem.chat_session.send_message(ingred)
+    # print(ans.text, type(ans.text))
+    return jsonify(ans.text), 200
