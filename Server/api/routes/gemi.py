@@ -10,6 +10,7 @@ import google.generativeai as genai
 key = os.getenv("GEMINI_API_KEY")
 if not key:
     print("ERROR GEMENI KEY MISSIN")
+print(key)
 genai.configure(api_key=key)
 generation_config = {
   "temperature": 1,
@@ -46,6 +47,8 @@ class GEmeni:
             },
           ]
         )
+        print(self.chat_session.send_message("tomato, rice, green salad, cheese, cooked chicken, corn").text)
+
 
 # response = chat_session.send_message("tomato, rice, green salad, cheese, cooked chicken, corn")
 
