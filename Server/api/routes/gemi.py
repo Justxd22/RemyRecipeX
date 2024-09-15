@@ -47,7 +47,7 @@ class GEmeni:
             },
           ]
         )
-        print(self.chat_session.send_message("tomato, rice, green salad, cheese, cooked chicken, corn").text)
+        # print(self.chat_session.send_message("tomato, rice, green salad, cheese, cooked chicken, corn").text)
 
 
 # response = chat_session.send_message("tomato, rice, green salad, cheese, cooked chicken, corn")
