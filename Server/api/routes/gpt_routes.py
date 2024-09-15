@@ -2,7 +2,6 @@
 from flask import Blueprint, jsonify, request, session
 from .gemi import GEmeni
 
-gem = GEmeni()
 gpt_bp = Blueprint('gpt', __name__)
 
 @gpt_bp.route("/model", methods=["GET"])
@@ -34,3 +33,8 @@ def ask():
     ans = gem.chat_session.send_message(ingred)
     # print(ans.text, type(ans.text))
     return jsonify(ans.text), 200
+
+
+def init_gpt_routes(gem_key):
+    global gem
+    gem = GEmeni(gem_key)

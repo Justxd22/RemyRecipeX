@@ -7,11 +7,10 @@ $ pip install google-generativeai
 import os
 import google.generativeai as genai
 
-key = os.getenv("GEMINI_API_KEY")
-if not key:
-    print("ERROR GEMENI KEY MISSIN")
-print(key)
-genai.configure(api_key=key)
+# key = os.getenv("GEMINI_API_KEY")
+# if not key:
+#     print("ERROR GEMENI KEY MISSIN")
+# print(key)
 generation_config = {
   "temperature": 1,
   "top_p": 0.95,
@@ -21,9 +20,10 @@ generation_config = {
 }
 
 class GEmeni:
-    def __init__(self):
+    def __init__(self, key):
         """hi."""
         # Create the model
+        genai.configure(api_key=key)
         self.model = genai.GenerativeModel(
           model_name="gemini-1.5-flash",
           generation_config=generation_config,

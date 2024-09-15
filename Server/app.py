@@ -23,6 +23,7 @@ def create_app():
 
 
     app.config.from_object(get_config())
+    print(" d " +  app.config['GEMINI_API_KEY'] + " ddd")
 
     app.config.update(
         SESSION_COOKIE_SECURE=False,  # Ensure cookies are only sent over HTTPS
@@ -68,7 +69,7 @@ def create_app():
     # Initialize API
     auth = Auth(app.db)
     user = User(app.db)
-    init_api(auth, user)
+    init_api(auth, user, app.config['GEMINI_API_KEY'])
 
     # Apply middleware
     auth_middleware(app)
