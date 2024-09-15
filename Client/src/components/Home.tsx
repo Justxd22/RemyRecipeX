@@ -342,7 +342,7 @@ const Home: FC = () => {
       {loading && <Spinner />} {/* Show loading spinner while fetching data */}
       {responseDialog && (
         <>
-          {console.log("Modal is being triggered")} {/* Add a debug log */}
+          {console.log("Modal is being triggered")} Add a debug log
           <RecipeModal />
         </>
       )}
