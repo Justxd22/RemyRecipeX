@@ -68,7 +68,7 @@ def create_app():
     # Initialize API
     auth = Auth(app.db)
     user = User(app.db)
-    init_api(auth, user)
+    init_api(auth, user, app.config['GEMINI_API_KEY'])
 
     # Apply middleware
     auth_middleware(app)
