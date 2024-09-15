@@ -30,9 +30,9 @@ def ask():
     if not ingred:
         return jsonify({"message": "missing parameters"}), 400
 
-    ans = gem.chat_session.send_message(ingred)
-    # print(ans.text, type(ans.text))
-    return jsonify(ans.text), 200
+    ans = gem.ask(ingred)
+    print(ans, type(ans))
+    return jsonify(ans), 200
 
 
 def init_gpt_routes(gem_key):
