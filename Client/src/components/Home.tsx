@@ -10,7 +10,7 @@ import LogoN from "../assets/images/LogoN.png";
 import text from "../assets/images/text.png";
 import LoginModal from "./LoginModal";
 import RegisterModal from "./RegisterModal";
-import RecipeModal, { Recipe } from "./RecipeModal";
+import RecipeModal from "./RecipeModal";
 import suggestion1 from "../assets/images/suggestion1.png";
 import suggestion2 from "../assets/images/suggestion2.png";
 import suggestion3 from "../assets/images/suggestion3.png";
@@ -20,6 +20,11 @@ import suggestion6 from "../assets/images/suggestion6.png";
 import suggestion7 from "../assets/images/suggestion7.png";
 import suggestion8 from "../assets/images/suggestion8.png";
 import Spinner from "./Spinner";
+import { useDispatch, useSelector } from "react-redux";
+import { setResponse } from "../state/responseSlice";
+import { openResponseDialog } from "../state/dialogSlice";
+import { RootState } from "../state/store";
+// import { Recipe } from "../lib/types";
 
 const typingTexts = [
   "Let's cook!",
@@ -43,8 +48,8 @@ const Home: FC = () => {
   const [inputValue, setInputValue] = useState("");
   const [loading, setLoading] = useState(false); // New loading state
   const [placeholderText, setPlaceholderText] = useState("");
-  const [recipeData, setRecipeData] = useState<Recipe | null>(null);
-  const [showRecipeModal, setShowRecipeModal] = useState(false);
+  // const [recipeData, setRecipeData] = useState<Recipe | null>(null);
+  // const [showRecipeModal, setShowRecipeModal] = useState(false);
   const [textIndex, setTextIndex] = useState(0);
   const [animationPhase, setAnimationPhase] = useState<
     "typing" | "pause" | "deleting" | "waiting"
@@ -55,11 +60,12 @@ const Home: FC = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const dispatch = useDispatch();
+  const responseDialog = useSelector( (state: RootState) => state.dialog.responseDialog)
   useEffect(() => {
     async function getName() {
       const res = await fetch("/api/user/profile", {
-        credentials: "same-origin",
+        credentials: "include",
       });
       const data = await res.json();
       console.log(data);
@@ -71,16 +77,23 @@ const Home: FC = () => {
       }
     }
     async function isValid() {
-      const res = await fetch("/api/auth/check-session", {
-        credentials: "same-origin",
-      });
-      const data = await res.json();
-      console.log(data);
-      if (data.code === 1) {
-        setIsLoggedIn(true);
-        getName();
-      }
+      fetch("/api/auth/check-session", {
+        method: "GET",
+        credentials: "include", // Ensures the session cookie is sent with the request
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.code === 1) {
+            console.log("User is authenticated");
+            setIsLoggedIn(true);
+            getName();
+          } else {
+            console.log("User is not authenticated");
+          }
+        })
+        .catch((error) => console.error("Error:", error));
     }
+
     isValid();
   }, []);
 
@@ -181,9 +194,9 @@ const Home: FC = () => {
     setShowRegisterModal(false);
   };
 
-  const closeRecipeModal = () => {
-    setShowRecipeModal(false);
-  };
+  // const closeRecipeModal = () => {
+  //   setShowRecipeModal(false);
+  // };
 
   const handleModalClose = () => {
     setShowModal(false);
@@ -196,12 +209,12 @@ const Home: FC = () => {
     try {
       const response = await fetch("/api/auth/login", {
         method: "POST",
+        credentials: "include", // Necessary to include session cookies
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
-        // credentials: 'include', // Include credentials to save cookies, only in cross-origin requests
-        credentials: "same-origin", //only for same-origin requests
+        // credentials: "same-origin", //only for same-origin requests
       });
 
       const data = await response.json();
@@ -228,8 +241,8 @@ const Home: FC = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ name, email, password }),
-        // credentials: 'include', // Include credentials to save cookies, only in cross-origin requests
-        credentials: "same-origin", //only for same-origin requests
+        credentials: "include", // Include credentials to save cookies, only in cross-origin requests
+        // credentials: "same-origin", //only for same-origin requests
       });
 
       const data = await response.json();
@@ -255,21 +268,23 @@ const Home: FC = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ input: inputValue }),
-        credentials: "same-origin", //only for same-origin requests
+        credentials: "include", // Include credentials to save cookies, only in cross-origin requests
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        console.log("Answer successful:", data);
-        setRecipeData(data); // Store the received data
+        // console.log("Answer successful:", data);
+        dispatch(setResponse(data));
+        dispatch(openResponseDialog())
+        // setRecipeData(data); // Store the received data
         setLoading(false); // Stop loading when data is received
-        setShowRecipeModal(true); // Show the modal once data is ready
-        alert(data); //For Testing
+        // setShowRecipeModal(true); // Show the modal once data is ready
+        // alert(data); //For Testing
       } else {
         console.error(" failed:", data.message);
         setLoading(false); // Stop loading if the request fails
-        alert(` failed: ${data.message}`);
+        // alert(` failed: ${data.message}`);
       }
     } catch (error) {
       console.error("Error occurred:", error);
@@ -325,10 +340,10 @@ const Home: FC = () => {
       )}
       {/* Loading Spinner */}
       {loading && <Spinner />} {/* Show loading spinner while fetching data */}
-      {showRecipeModal && recipeData && (
+      {responseDialog && (
         <>
           {console.log("Modal is being triggered")} {/* Add a debug log */}
-          <RecipeModal recipe={recipeData} onClose={closeRecipeModal} />
+          <RecipeModal />
         </>
       )}
       <div className="suggestionsContainer">

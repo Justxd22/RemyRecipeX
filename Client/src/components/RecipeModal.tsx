@@ -1,38 +1,42 @@
-import { FC } from 'react';
-import { FaTimes } from 'react-icons/fa';
-import '../assets/stylesheets/Recipe.css'; // Ensure you still use the same styles
+import { FaTimes } from "react-icons/fa";
+import "../assets/stylesheets/Recipe.css"; // Ensure you still use the same styles
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../state/store";
+import { closeResponseDialog } from "../state/dialogSlice";
+import { Recipe } from "../lib/types";
 
-interface Ingredient {
-  name?: string;
-  quantity?: string;
-  unit?: string;
-  notes?: string;
-}
+const RecipeModal = () => {
+  const dispatch = useDispatch();
+  
+  // Assuming recipeResponse is a JSON string
+  const recipeResponse = useSelector(
+    (state: RootState) => state.response.geminiResponse
+  ) as string | null;
 
-interface Instruction {
-  step?: string;
-  notes?: string;
-}
+  // Parse recipeResponse if it is a JSON string and assign the type as Recipe
+  let recipe: Recipe | null = null;
+  if (recipeResponse) {
+    try {
+      recipe = JSON.parse(recipeResponse) as Recipe;
+    } catch (e) {
+      console.error("Error parsing JSON:", e);
+    }
+  }
 
-export interface Recipe {
-  name?: string;
-  description?: string;
-  ingredients: Ingredient[];
-  instructions: Instruction[];
-}
+  // Log recipe data for debugging
+  console.log("gemini response from the modal", recipe);
 
-interface RecipeModalProps {
-  recipe: Recipe | null; // Recipe data
-  onClose: () => void; // Close function
-}
-
-const RecipeModal: FC<RecipeModalProps> = ({ recipe, onClose }) => {
-  if (!recipe) return null; // Return null if no recipe data
+  // Return null if no recipe data is available
+  if (!recipe) return null;
 
   return (
     <div className="recipe-modal-overlay">
       <div className="recipe-modal-content">
-        <button type="button" className="close-recipe-modal" onClick={onClose}>
+        <button
+          type="button"
+          className="close-recipe-modal"
+          onClick={() => dispatch(closeResponseDialog())}
+        >
           <FaTimes className="icon" />
         </button>
         <h1>{recipe.name}</h1>
