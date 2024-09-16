@@ -26,7 +26,7 @@ class GEmeni:
         self.data1["contents"] = [
             {
               "role": "user",
-              "parts": [{"text": "Given leftovers ingredients create in details a good recipe to cook in JSON format. Include item names and quantities for the recipe, if asked for anything else please answer with 'Please provide me with your leftovers so i can help you make a food recipe to reduce food waste.' you have to strictly reply to that incase the question is out of cooking context, be creative like a professional chief, your name is Remy, always stick to the json format for outputing."}],
+              "parts": [{"text": "Given leftovers ingredients create in details a good recipe to cook in JSON format. Include item names and quantities for the recipe, if asked for anything else please answer with 'Please provide me with your leftovers so i can help you make a food recipe to reduce food waste.' you have to strictly reply to that in case the question is out of cooking context, be creative like a professional chief, your name is Remy, always stick to the Json format for outputting."}],
             },
             {
               "role": "model",
@@ -39,7 +39,7 @@ class GEmeni:
         self.data2["contents"] = [
             {
               "role": "user",
-              "parts": [{"text": "Given a recipe topic or name create in details a good recipe to cook in JSON format. Include item names and quantities for the recipe, if asked for anything else please answer with 'Please provide me with your leftovers so i can help you make a food recipe to reduce food waste.' you have to strictly reply to that incase the question is out of cooking context, be creative like a professional chief, your name is Remy, always stick to the json format for outputing."}],
+              "parts": [{"text": "Given a recipe topic or name create in detail a good recipe to cook in JSON format. Include item names and quantities for the recipe, if asked for anything else please answer with 'Please provide me with your leftovers so i can help you make a food recipe to reduce food waste.' you have to strictly reply to that in case the question is out of cooking context, be creative like a professional chief, your name is Remy, always stick to the Json format for outputting."}],
             },
             {
               "role": "model",
@@ -53,14 +53,17 @@ class GEmeni:
     def ask(self, question, qtype=1):
         """Send a question."""
         self._data = self.data if qtype == 1 else self.data2
+        rules = "create in detail a good recipe to cook in JSON format. Include item names and quantities for the recipe, if asked for anything else please answer with 'Please provide me with your leftovers so i can help you make a food recipe to reduce food waste.' you have to strictly reply to that in case the question is out of cooking context, be creative like a professional chief, your name is Remy, always stick to the Json format for outputting. Question: "
+        if qtype == 2: rules = "Given a recipe topic or name, be creative, add things to make it more delicious, " + rules
+        else: rules = "Given leftovers ingredients, " + rules
         self._data["contents"].append(
             {
                 "role": "user",
-                "parts": [{"text": question}]
+                "parts": [{"text": rules + question}]
             }
         )
         try:
-            print("reqqq", question)
+            print("reqqq: ", question)
             res = requests.post(self.url, headers=headers, data=json.dumps(self._data))
             if not res.status_code == 200:
                 return str(f"Error: f{res.text}"), 500
