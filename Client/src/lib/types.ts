@@ -22,4 +22,13 @@ export type Recipe = {
 export type ResponseState = {
   geminiResponse: Recipe | null; // Can be null initially
   error: string;
+  movieResponse: MovieData | null;
+};
+
+
+export type MovieData = {
+  image: string;
+  name: string;
+  desc: string;
+  lang: string;
 };

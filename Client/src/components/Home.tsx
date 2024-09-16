@@ -7,13 +7,14 @@ import RegisterModal from "./RegisterModal";
 import RecipeModal from "./RecipeModal";
 import Spinner from "./Spinner";
 import { useDispatch, useSelector } from "react-redux";
-import { setResponse } from "../state/responseSlice";
+import { setMovie, setResponse } from "../state/responseSlice";
 import { openResponseDialog } from "../state/dialogSlice";
 import { RootState } from "../state/store";
 import { toast } from "sonner";
 import SuggestionsCarousel from "./Crousel";
 import { LuSendHorizonal } from "react-icons/lu";
 import { Textarea } from "@/components/ui/textarea";
+import { MovieData } from "@/lib/types";
 
 const typingTexts = [
   "Let's cook!",
@@ -214,39 +215,78 @@ const Home: FC = () => {
     }
   };
 
+  // const fetchMovieData = async () => {
+  //   try {
+  //     const response = await fetch("/api/movie/ask", {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       credentials: "include", // Include credentials to save cookies, only in cross-origin requests
+  //     });
+  //     if (!response.ok) {
+  //       console.log("first", "error ocured buddy");
+  //       throw new Error("Network response was not ok");
+  //     }
+  //     const data: MovieData = await response.json();
+  //     console.log("data of the movie", data);
+  //     dispatch(setMovie(data));
+  //   } catch (error) {
+  //     console.error("Error fetching movie data:", error);
+  //   }
+  // };
+
   const handleSearchClick = async () => {
     setLoading(true); // Set loading to true when search starts
+
     try {
-      const response = await fetch("/api/gpt/ask", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ input: inputValue }),
-        credentials: "include", // Include credentials to save cookies, only in cross-origin requests
-      });
+        // Fetch recipe data
+        const recipeResponse = await fetch("/api/gpt/ask", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ input: inputValue }),
+            credentials: "include", // Include credentials to save cookies, only in cross-origin requests
+        });
 
-      const data = await response.json();
+        if (!recipeResponse.ok) {
+            const errorData = await recipeResponse.json();
+            console.error("Recipe fetch failed:", errorData.message);
+            alert(`Recipe fetch failed: ${errorData.message}`);
+            setLoading(false); // Stop loading if the request fails
+            return;
+        }
 
-      if (response.ok) {
-        // console.log("Answer successful:", data);
-        dispatch(setResponse(data));
+        const recipeData = await recipeResponse.json();
+        dispatch(setResponse(recipeData));
         dispatch(openResponseDialog());
-        // setRecipeData(data); // Store the received data
-        setLoading(false); // Stop loading when data is received
-        // setShowRecipeModal(true); // Show the modal once data is ready
-        // alert(data); //For Testing
-      } else {
-        const data = await response.json();
-        console.error(" failed:", data.message);
-        setLoading(false); // Stop loading if the request fails
-        alert(` failed: ${data.message}`);
-      }
+
+        // Fetch movie data
+        const movieResponse = await fetch("/api/movie/ask", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: "include", // Include credentials to save cookies, only in cross-origin requests
+        });
+
+        if (!movieResponse.ok) {
+            console.log("Error occurred while fetching movie data");
+            throw new Error("Network response was not ok");
+        }
+
+        const movieData: MovieData = await movieResponse.json();
+        console.log("Movie data:", movieData);
+        dispatch(setMovie(movieData));
+        
     } catch (error) {
-      console.error("Error occurred:", error);
-      setLoading(false); // Stop loading on error
+        console.error("Error occurred:", error);
+    } finally {
+        setLoading(false); // Stop loading in both success and error cases
     }
-  };
+};
+
   const handleSuggestionClick = async (title: string) => {
     setLoading(true); // Set loading to true when search starts
     try {
@@ -348,7 +388,7 @@ const Home: FC = () => {
           <RecipeModal />
         </>
       )}
-      <SuggestionsCarousel handleSuggestionClick={handleSuggestionClick}/>
+      <SuggestionsCarousel handleSuggestionClick={handleSuggestionClick} />
     </div>
   );
 };

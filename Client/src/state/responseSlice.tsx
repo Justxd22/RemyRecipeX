@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Recipe, ResponseState } from "../lib/types";
+import { MovieData, Recipe, ResponseState } from "../lib/types";
 
 const initialState: ResponseState = {
   geminiResponse: null, // Initial value is null until a response is received
+  movieResponse: null, // Initial value is null until a response is received
   error: "",
 };
 
@@ -18,9 +19,13 @@ const registerSlice = createSlice({
     setResError: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
     },
+    setMovie:(state, action: PayloadAction<MovieData>) => {
+      state.movieResponse = action.payload;
+    //   console.log('from slice', action.payload)
+    },
   },
 });
 
-export const { setResponse, setResError } = registerSlice.actions;
+export const { setResponse, setResError, setMovie } = registerSlice.actions;
 
 export default registerSlice.reducer;
