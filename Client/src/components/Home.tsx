@@ -1,38 +1,19 @@
 import React, { FC, useState, useEffect } from "react";
-import { FaArrowRight } from "react-icons/fa";
-// import { IoChevronBack, IoChevronForward } from "react-icons/io5"; // New import for modern icons
-import {
-  TbArrowBadgeRightFilled,
-  TbArrowBadgeLeftFilled,
-} from "react-icons/tb";
-import "../assets/stylesheets/Home.css";
+import "../assets/stylesheets/updatedHome.css";
 import LogoN from "../assets/images/LogoN.png";
 import text from "../assets/images/text.png";
 import LoginModal from "./LoginModal";
 import RegisterModal from "./RegisterModal";
 import RecipeModal from "./RecipeModal";
-import suggestion1 from "../assets/images/suggestion1.png";
-import suggestion2 from "../assets/images/suggestion2.png";
-import suggestion3 from "../assets/images/suggestion3.png";
-import suggestion4 from "../assets/images/suggestion4.png";
-import suggestion5 from "../assets/images/suggestion5.png";
-import suggestion6 from "../assets/images/suggestion6.png";
-import suggestion7 from "../assets/images/suggestion7.png";
-import suggestion8 from "../assets/images/suggestion8.png";
-import suggestion9 from "../assets/images/suggestion9.png";
-import suggestion10 from "../assets/images/suggestion10.png";
-import suggestion11 from "../assets/images/suggestion11.png";
-import suggestion12 from "../assets/images/suggestion12.png";
-import suggestion13 from "../assets/images/suggestion13.png";
-import suggestion14 from "../assets/images/suggestion14.png";
-import suggestion15 from "../assets/images/suggestion15.png";
-import suggestion16 from "../assets/images/suggestion16.png";
 import Spinner from "./Spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { setResponse } from "../state/responseSlice";
 import { openResponseDialog } from "../state/dialogSlice";
 import { RootState } from "../state/store";
-// import { Recipe } from "../lib/types";
+import { toast } from "sonner";
+import SuggestionsCarousel from "./Crousel";
+import { LuSendHorizonal } from "react-icons/lu";
+import { Textarea } from "@/components/ui/textarea";
 
 const typingTexts = [
   "Let's cook!",
@@ -41,31 +22,10 @@ const typingTexts = [
   "What's on your mind?",
 ];
 
-const suggestions = [
-  { title: "Chicken Maratha", image: suggestion1 },
-  { title: "Sweet & Sour", image: suggestion2 },
-  { title: "Bacon", image: suggestion3 },
-  { title: "Rice", image: suggestion4 },
-  { title: "Cookies", image: suggestion5 }, // Add more suggestions as needed
-  { title: "Sushi", image: suggestion6 },
-  { title: "Pizza", image: suggestion7 },
-  { title: "Shawerma", image: suggestion8 },
-  { title: "Crepe", image: suggestion9 },
-  { title: "Koshari", image: suggestion10 },
-  { title: "Couscous", image: suggestion11 },
-  { title: "Steak", image: suggestion12 },
-  { title: "Smashed Potatos", image: suggestion13 },
-  { title: "Confit Byaldi", image: suggestion14 },
-  { title: "Kebab", image: suggestion15 },
-  { title: "Molten Cake", image: suggestion16 },
-];
-
 const Home: FC = () => {
   const [inputValue, setInputValue] = useState("");
   const [loading, setLoading] = useState(false); // New loading state
   const [placeholderText, setPlaceholderText] = useState("");
-  // const [recipeData, setRecipeData] = useState<Recipe | null>(null);
-  // const [showRecipeModal, setShowRecipeModal] = useState(false);
   const [textIndex, setTextIndex] = useState(0);
   const [animationPhase, setAnimationPhase] = useState<
     "typing" | "pause" | "deleting" | "waiting"
@@ -77,7 +37,9 @@ const Home: FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const responseDialog = useSelector( (state: RootState) => state.dialog.responseDialog)
+  const responseDialog = useSelector(
+    (state: RootState) => state.dialog.responseDialog
+  );
   useEffect(() => {
     async function getName() {
       const res = await fetch("/api/user/profile", {
@@ -112,8 +74,6 @@ const Home: FC = () => {
 
     isValid();
   }, []);
-
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     if (inputValue !== "") {
@@ -162,27 +122,8 @@ const Home: FC = () => {
     return () => window.clearTimeout(timer);
   }, [placeholderText, animationPhase, textIndex, inputValue]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value);
-  };
-
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % suggestions.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + suggestions.length) % suggestions.length
-    );
-  };
-
-  const getVisibleSuggestions = () => {
-    const visibleSuggestions = [];
-    for (let i = 0; i < 4; i++) {
-      const index = (currentIndex + i) % suggestions.length;
-      visibleSuggestions.push(suggestions[index]);
-    }
-    return visibleSuggestions;
   };
 
   const handleInputFocus = () => {
@@ -210,10 +151,6 @@ const Home: FC = () => {
     setShowRegisterModal(false);
   };
 
-  // const closeRecipeModal = () => {
-  //   setShowRecipeModal(false);
-  // };
-
   const handleModalClose = () => {
     setShowModal(false);
     setShowRegisterModal(false);
@@ -237,6 +174,7 @@ const Home: FC = () => {
 
       if (response.ok) {
         console.log("Login successful:", data);
+        toast("Login successful");
         window.location.href = "/";
       } else {
         console.error("Login failed:", data.message);
@@ -265,6 +203,7 @@ const Home: FC = () => {
 
       if (response.ok) {
         console.log("Register successful:", data);
+        toast("Register successful");
         closeRegisterModal();
       } else {
         console.error("Register failed:", data.message);
@@ -287,11 +226,12 @@ const Home: FC = () => {
         credentials: "include", // Include credentials to save cookies, only in cross-origin requests
       });
 
-      
+      const data = await response.json();
+
       if (response.ok) {
         // console.log("Answer successful:", data);
-        dispatch(setResponse(await response.json()));
-        dispatch(openResponseDialog())
+        dispatch(setResponse(data));
+        dispatch(openResponseDialog());
         // setRecipeData(data); // Store the received data
         setLoading(false); // Stop loading when data is received
         // setShowRecipeModal(true); // Show the modal once data is ready
@@ -307,58 +247,72 @@ const Home: FC = () => {
       setLoading(false); // Stop loading on error
     }
   };
-  const handleSuggestionClick = async (title: string) => {
-    setLoading(true); // Set loading to true when search starts
-    try {
-      const response = await fetch("/api/gpt/recipe", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ input: title }),
-        credentials: "include", // Include credentials to save cookies, only in cross-origin requests
-      });
+  // const handleSuggestionClick = async (title: string) => {
+  //   setLoading(true); // Set loading to true when search starts
+  //   try {
+  //     const response = await fetch("/api/gpt/recipe", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ input: title }),
+  //       credentials: "include", // Include credentials to save cookies, only in cross-origin requests
+  //     });
 
-      
-      if (response.ok) {
-        // console.log("Answer successful:", data);
-        dispatch(setResponse(await response.json()));
-        dispatch(openResponseDialog())
-        // setRecipeData(data); // Store the received data
-        setLoading(false); // Stop loading when data is received
-        // setShowRecipeModal(true); // Show the modal once data is ready
-        // alert(data); //For Testing
-      } else {
-        const data = await response.json();
-        console.error(" failed:", data.message);
-        setLoading(false); // Stop loading if the request fails
-        alert(` failed: ${data.message}`);
-      }
-    } catch (error) {
-      console.error("Error occurred:", error);
-      setLoading(false); // Stop loading on error
-    }
-  }
+  //     if (response.ok) {
+  //       // console.log("Answer successful:", data);
+  //       dispatch(setResponse(await response.json()));
+  //       dispatch(openResponseDialog());
+  //       // setRecipeData(data); // Store the received data
+  //       setLoading(false); // Stop loading when data is received
+  //       // setShowRecipeModal(true); // Show the modal once data is ready
+  //       // alert(data); //For Testing
+  //     } else {
+  //       const data = await response.json();
+  //       console.error(" failed:", data.message);
+  //       setLoading(false); // Stop loading if the request fails
+  //       alert(` failed: ${data.message}`);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error occurred:", error);
+  //     setLoading(false); // Stop loading on error
+  //   }
+  // };
 
   return (
-    <div className="homeContainer">
+    <div className="home_container relative w-full h-screen bg-no-repeat bg-center bg-cover flex flex-col justify-evenly md:justify-between before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-gradient-to-t before:from-[rgba(150,96,55,0.8)] before:to-[rgba(150,96,55,0)] before:z-0">
       {/* <img src={Logo} alt="Logo" className="homeLogo" /> */}
-      <img src={LogoN} alt="Logo" className="homeLogoN" />
-      <img src={text} alt="Logo" className="homeLogoT" />
-      <input
-        type="text"
-        className="searchBox custom-placeholder"
-        value={inputValue}
-        onChange={handleInputChange}
-        onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
-        placeholder={inputValue === "" ? placeholderText : ""}
-      />
-      {inputValue && (
-        <div onClick={handleSearchClick}>
-          <FaArrowRight className="search-icon" />
-        </div>
-      )}
+      <div className="w-full h-20 flex flex-col justify-center items-center relative">
+        <img
+          src={LogoN}
+          alt="Logo"
+          className="homeLogoN animate-spinCustom w-32 md:w-52 absolute top-1/2"
+        />
+        <img
+          src={text}
+          alt="Logo"
+          className="homeLogoT w-28 md:w-52 absolute top-[70%] drop-shadow-custom"
+        />
+      </div>
+      <div className="flex place-items-center justify-center gap-2 mt-28 z-50">
+        <Textarea
+          className="searchBox custom-placeholder w-60 md:w-1/3 py-2 px-4 xl:py-4 xl:px-6 rounded-2xl bg-transparent border-white text-white placeholder:text-gray-300 border-0 bg-gradient-to-b from-[rgba(200,119,53,0.6)] to-[rgba(194,180,134,0.0)] font-sans tracking-wide shadow-[0_-10px_10px_rgba(0,0,0,0.15)] backdrop-blur-sm max-h-[40px]"
+          value={inputValue}
+          onChange={handleInputChange}
+          onFocus={handleInputFocus}
+          onBlur={handleInputBlur}
+          placeholder={inputValue === "" ? placeholderText : ""}
+        />
+
+        {inputValue && (
+          <div
+            onClick={handleSearchClick}
+            className="transition-all hover:translate-x-4 duration-500 hover:cursor-pointer"
+          >
+            <LuSendHorizonal className="search-icon text-main w-fit h-10 my-auto" />
+          </div>
+        )}
+      </div>
       {showModal && (
         <LoginModal
           email={email}
@@ -394,23 +348,7 @@ const Home: FC = () => {
           <RecipeModal />
         </>
       )}
-      <div className="suggestionsContainer">
-        {getVisibleSuggestions().map((suggestion, index) => (
-          <div 
-          key={index} className="suggestion"
-          onClick={() => handleSuggestionClick(suggestion.title)} // Call the function with suggestion title
-          style={{ cursor: 'pointer' }}>
-            <h3>{suggestion.title}</h3>
-            <img src={suggestion.image} alt={suggestion.title} />
-          </div>
-        ))}
-      </div>
-      <button className="sliderButton left" onClick={prevSlide}>
-        <TbArrowBadgeLeftFilled />
-      </button>
-      <button className="sliderButton right" onClick={nextSlide}>
-        <TbArrowBadgeRightFilled />
-      </button>
+      <SuggestionsCarousel />
     </div>
   );
 };
