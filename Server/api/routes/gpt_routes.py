@@ -7,7 +7,16 @@ gpt_bp = Blueprint('gpt', __name__)
 
 @gpt_bp.route("/model", methods=["GET"])
 def model():
-    """Retrieve model info."""
+    """
+    Retrieve the model information.
+
+    This endpoint returns basic information about the model version.
+    It checks if the user is logged in before returning the model info.
+    
+    Returns:
+        - JSON response with model version if logged in.
+        - 400 error if the user is not authenticated.
+    """
     if 'email' not in session:
         return jsonify({"message": "Not logged in"}), 400
 
