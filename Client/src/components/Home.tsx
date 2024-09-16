@@ -238,7 +238,6 @@ const Home: FC = () => {
 
   const handleSearchClick = async () => {
     setLoading(true); // Set loading to true when search starts
-
     try {
       // Fetch recipe data
       const recipeResponse = await fetch("/api/gpt/ask", {
@@ -263,23 +262,6 @@ const Home: FC = () => {
       dispatch(setResponse(recipeData));
       dispatch(openResponseDialog());
 
-      // // Fetch movie data
-      // const movieResponse = await fetch("/api/movie/ask", {
-      //   method: "GET",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   credentials: "include", // Include credentials to save cookies, only in cross-origin requests
-      // });
-
-      // if (!movieResponse.ok) {
-      //   console.error("Error occurred while fetching movie data");
-      //   throw new Error("Network response was not ok");
-      // }
-
-      // const movieData: MovieData = await movieResponse.json();
-      // console.log("Movie data received:", movieData);
-      // dispatch(setMovie(movieData));
     } catch (error) {
       console.error("Error occurred:", error);
     } finally {
