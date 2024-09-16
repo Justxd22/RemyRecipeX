@@ -304,11 +304,14 @@ const Home: FC = () => {
           placeholder={inputValue === "" ? placeholderText : ""}
         />
 
-        {/* {inputValue && ( */}
-        <div onClick={handleSearchClick} className="transition-all hover:translate-x-4 duration-500 hover:cursor-pointer">
-          <LuSendHorizonal className="search-icon text-main w-fit h-10 my-auto" />
-        </div>
-        {/* )} */}
+        {inputValue && (
+          <div
+            onClick={handleSearchClick}
+            className="transition-all hover:translate-x-4 duration-500 hover:cursor-pointer"
+          >
+            <LuSendHorizonal className="search-icon text-main w-fit h-10 my-auto" />
+          </div>
+        )}
       </div>
       {showModal && (
         <LoginModal
