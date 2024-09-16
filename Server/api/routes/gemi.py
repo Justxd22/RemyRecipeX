@@ -83,10 +83,13 @@ class GEmeni:
         )
         try:
             print("reqqq: ", question)
+            # Send a POST request to the generative language API
             res = requests.post(self.url, headers=headers, data=json.dumps(self._data))
             if not res.status_code == 200:
                 return str(f"Error: f{res.text}"), 500
             print(res)
+            
+            # Process the response and return the generated recipe
             res = res.text.replace("```json", "").replace("```", "")
             res = json.loads(res)
             ans = res['candidates'][0]["content"]["parts"][0]["text"]
