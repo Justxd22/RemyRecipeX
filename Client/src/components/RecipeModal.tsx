@@ -12,10 +12,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { MovieData, Recipe } from "../lib/types";
 import "../assets/stylesheets/updatedHome.css";
-
 const RecipeModal = () => {
   const dispatch = useDispatch();
-  // Retrieve the recipe response from the Redux store
   const recipeResponse = useSelector(
     (state: RootState) => state.response.geminiResponse
   ) as string | null;
@@ -25,26 +23,26 @@ const RecipeModal = () => {
   const openDialog = useSelector(
     (state: RootState) => state.dialog.responseDialog
   ) as boolean;
-  // Parse recipeResponse if it is a JSON string and assign the type as Recipe
+
   let movie: MovieData | null = null;
   if (movieData) {
     try {
       movie = JSON.parse(movieData) as MovieData;
     } catch (e) {
-      console.error("Error parsing JSON:", e);
+      console.error("Error parsing movie JSON:", e);
     }
   }
-  console.log('movie', movie)
+  console.log('Movie data:', movie);
+
   let recipe: Recipe | null = null;
   if (recipeResponse) {
     try {
       recipe = JSON.parse(recipeResponse) as Recipe;
     } catch (e) {
-      console.error("Error parsing JSON:", e);
+      console.error("Error parsing recipe JSON:", e);
     }
   }
-  // console.log("recipe from the modal", recipe);
-  // Close dialog handler
+
   const handleClose = () => {
     dispatch(closeResponseDialog());
   };
@@ -86,6 +84,7 @@ const RecipeModal = () => {
         ) : (
           <p>No recipe data available.</p>
         )}
+
         <h2 className="font-semibold text-white">
           Here are some Nearby stores:
         </h2>
@@ -96,6 +95,7 @@ const RecipeModal = () => {
           allowFullScreen
           className="w-full h-96"
         ></iframe>
+
         <h2 className="font-semibold text-white mt-4">
           Here&apos;s a movie to enjoy while chill and eat:
         </h2>
