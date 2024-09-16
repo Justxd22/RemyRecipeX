@@ -48,8 +48,9 @@ const RegisterModal: FC<RegisterModalProps> = ({
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                  className="placeholder:text-gray-300 bg-transparent"
               />
-              <FaUser className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+              <FaUser className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-100" />
             </div>
             <div className="relative">
               <Input
@@ -58,8 +59,9 @@ const RegisterModal: FC<RegisterModalProps> = ({
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                  className="placeholder:text-gray-300 bg-transparent"
               />
-              <FaUser className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+              <FaUser className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-100" />
             </div>
             <div className="relative">
               <Input
@@ -68,12 +70,13 @@ const RegisterModal: FC<RegisterModalProps> = ({
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                  className="placeholder:text-gray-300 bg-transparent"
               />
-              <FaLock className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+              <FaLock className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-100" />
             </div>
           </div>
           <DialogFooter>
-            <Button className="w-full" type="submit">
+            <Button className="w-full bg-white text-black hover:bg-custom-bg hover:text-white" type="submit">
               Register
             </Button>
           </DialogFooter>
@@ -83,7 +86,7 @@ const RegisterModal: FC<RegisterModalProps> = ({
             Already have an account?{" "}
             <button
               type="button"
-              className="text-blue-600 hover:underline"
+              className="text-blue-300 hover:underline"
               onClick={openLoginModal}
             >
               Login

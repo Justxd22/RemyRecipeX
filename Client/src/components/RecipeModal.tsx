@@ -40,7 +40,7 @@ console.log('recipe from the modal', recipe)
 
   return (
     <Dialog open={openDialog}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] overflow-y-scroll text-white">
         <DialogHeader>
           <DialogTitle>{recipe ? recipe.name : "Recipe Details"}</DialogTitle>
           {recipe && (
@@ -75,7 +75,7 @@ console.log('recipe from the modal', recipe)
         )}
 
         <DialogFooter>
-          <Button onClick={handleClose}>Close</Button>
+          <Button onClick={handleClose} className="w-full bg-white text-black hover:bg-custom-bg hover:text-white">Close</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -16,7 +16,10 @@ export default {
         homeBg: "url('./src/assets/images/Background.jpg')",
       },
       colors: {
+        "custom-gradient":
+          "linear-gradient(90deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.35))",
         main: "#ffe4b4",
+        "custom-bg": "rgba(176,127,90,80%)",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
@@ -58,26 +61,34 @@ export default {
           5: "hsl(var(--chart-5))",
         },
       },
+      boxShadow: {
+        "custom-shadow": "0 0 30px 30px rgba(204, 149, 108, 0.41)", // Custom shadow
+      },
       keyframes: {
         spinCustom: {
           "0%": { transform: "translateX(0%) rotate(0deg)" },
           "100%": { transform: "translateX(0%) rotate(360deg)" },
         },
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
       },
       animation: {
         spinCustom: "spinCustom 15s linear infinite",
+        "fade-in": "fadeIn 0.5s ease-in-out", // Custom animation
       },
-	  dropShadow: {
-        'custom': [
-          '2px 2px 0 #000',     // bottom-right shadow
-          '-2px -2px 0 #000',   // top-left shadow
-          '2px -2px 0 #000',    // top-right shadow
-          '-2px 2px 0 #000'     // bottom-left shadow
+      dropShadow: {
+        custom: [
+          "2px 2px 0 #000", // bottom-right shadow
+          "-2px -2px 0 #000", // top-left shadow
+          "2px -2px 0 #000", // top-right shadow
+          "-2px 2px 0 #000", // bottom-left shadow
         ],
       },
     },
   },
   plugins: [
-    require('tailwindcss-animate'), // Correctly include the animate plugin // Correctly include the scrollbar hide plugin
+    require("tailwindcss-animate"), // Correctly include the animate plugin // Correctly include the scrollbar hide plugin
   ],
 };
