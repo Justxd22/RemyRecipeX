@@ -16,14 +16,13 @@
   }
 }
 
-
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0, 0, 0.5); /* Blurred background effect */
+  background: rgba(0, 0, 0, 0.5); /* Blurred background effect */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -34,7 +33,7 @@
 
 .modal-content {
   width: 35%;
-  background: rgb(176 127 90 / 80%);;
+  background: rgb(176 127 90 / 80%);
   color: white;
   border-radius: 30px;
   padding: 30px 40px;
@@ -48,5 +47,10 @@
   }
   to {
     opacity: 1;
+  }
+}
+@media (max-width: 640px) {
+  .modal-content {
+    width: 70%;
   }
 }

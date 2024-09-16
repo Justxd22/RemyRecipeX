@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Recipe } from "../lib/types";
+import "../assets/stylesheets/updatedHome.css";
 
 const RecipeModal = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const RecipeModal = () => {
   const recipeResponse = useSelector(
     (state: RootState) => state.response.geminiResponse
   ) as string | null;
-console.log('data came from redux', recipeResponse)
+  console.log("data came from redux", recipeResponse);
   const openDialog = useSelector(
     (state: RootState) => state.dialog.responseDialog
   ) as boolean;
@@ -32,7 +33,7 @@ console.log('data came from redux', recipeResponse)
       console.error("Error parsing JSON:", e);
     }
   }
-console.log('recipe from the modal', recipe)
+  console.log("recipe from the modal", recipe);
   // Close dialog handler
   const handleClose = () => {
     dispatch(closeResponseDialog());
@@ -40,9 +41,9 @@ console.log('recipe from the modal', recipe)
 
   return (
     <Dialog open={openDialog}>
-      <DialogContent className="sm:max-w-[425px] overflow-y-scroll text-white">
+      <DialogContent className="sm:max-w-[90%] md:max-w-[70%] overflow-y-scroll text-white response_modal">
         <DialogHeader>
-          <DialogTitle>{recipe ? recipe.name : "Recipe Details"}</DialogTitle>
+          <DialogTitle className="font-extrabold text-2xl">{recipe ? recipe.name : "Recipe Details"}</DialogTitle>
           {recipe && (
             <DialogDescription>{recipe.description}</DialogDescription>
           )}
@@ -73,9 +74,22 @@ console.log('recipe from the modal', recipe)
         ) : (
           <p>No recipe data available.</p>
         )}
+       <h2 className="font-semibold text-white">Here are some Nearby stores:</h2>
+        <iframe
+          src="https://maps.google.com/maps?q=super%20market&output=embed"
+          width={300}
+          height={150}
+          allowFullScreen
+          className="w-full h-96"
+        ></iframe>
 
         <DialogFooter>
-          <Button onClick={handleClose} className="w-full bg-white text-black hover:bg-custom-bg hover:text-white">Close</Button>
+          <Button
+            onClick={handleClose}
+            className="w-full bg-white text-black hover:bg-custom-bg hover:text-white"
+          >
+            Close
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
