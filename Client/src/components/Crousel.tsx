@@ -27,7 +27,11 @@ const suggestions = [
   { title: "Pizza", image: suggestion8 },
 ];
 
-const SuggestionsCarousel: React.FC = () => {
+interface SuggestionsCarouselProps {
+  handleSuggestionClick: (suggestion: any) => void; // Replace `any` with the appropriate type if you know the type of `suggestion`
+}
+
+const SuggestionsCarousel: React.FC<SuggestionsCarouselProps> = ({ handleSuggestionClick }) => {
 
   return (
     <Carousel
@@ -36,9 +40,12 @@ const SuggestionsCarousel: React.FC = () => {
       }}
       className="w-[60%] 2xl:w-[80%] mx-auto max-h-96 2xl:pb-20 bg-gradient-to-t from-[rgba(238,171,117,0.8)] to-[rgba(194,180,134,0.0)] shadow-[0_12px_12px_rgba(0,0,0,0.1)]"
     >
-      <CarouselContent>
+      <CarouselContent >
         {suggestions.map((suggestion, index) => (
-          <CarouselItem key={index} className="basis-1/2 md:basis-1/4 lg:basis-1/5 2xl:basis-1/3">
+          <CarouselItem 
+          key={index} 
+          className="basis-1/2 md:basis-1/4 lg:basis-1/5 2xl:basis-1/3"
+          onClick={() => handleSuggestionClick(suggestion.title)}>
             <div className="p-1">
               <Card>
                 <CardContent className="flex flex-col items-center justify-center p-6">

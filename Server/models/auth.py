@@ -1,13 +1,30 @@
-"""Auth here."""
+"""
+auth.py
+
+This module defines the Auth class, which provides methods for user authentication and management in a MongoDB database.
+"""
+
 import bcrypt
 from datetime import datetime
 import regex as re
 
 class Auth:
-    """Auth class."""
+    """
+    A class used to represent authentication operations.
+
+    Attributes:
+        db (Database): The MongoDB database instance.
+        users (Collection): The MongoDB collection for users.
+        email_regex (Pattern): Precompiled regex pattern for validating email addresses.
+    """
 
     def __init__(self, db):
-        """Iniit."""
+        """
+        Initializes an Auth instance.
+
+        Args:
+            db (Database): The MongoDB database instance.
+        """
         self.db = db
         if not 'users' in db.list_collection_names():
             c = db['users']
@@ -25,8 +42,21 @@ class Auth:
 
 
     def register_user(self, email: str, name: str, password: str):
-        '''Registers a user'''
-        # Check if email and username are valid
+        """
+        Registers a new user.
+
+        Args:
+            email (str): The email of the user to be registered.
+            name (str): The name of the user to be registered.
+            password (str): The password of the user to be registered.
+
+        Raises:
+            ValueError: If the email is invalid or already exists.
+
+        Returns:
+            InsertOneResult: The result of the insert operation.
+        """
+        # Check if email is valid
         if not self.email_regex.match(email):
             raise ValueError("Invalid email address.")
 
@@ -34,6 +64,7 @@ class Auth:
         e = self.users.find_one({ 'email': email })
         if e:
             raise ValueError(f"User {email} already exists")
+
         data = {
             'name': name,
             'email': email,
@@ -45,7 +76,18 @@ class Auth:
 
 
     def deregister_user(self, email: str):
-        '''De-registers a the user with the given email'''
+        """
+        Deregisters a user.
+
+        Args:
+            email (str): The email of the user to be deregistered.
+
+        Raises:
+            ValueError: If the user could not be deregistered.
+
+        Returns:
+            str: A message indicating the result of the deregistration.
+        """
         result = self.users.delete_one({'email': email})
         if result.deleted_count == 1:
             return f"User {email} has been deregistered successfully."
@@ -54,7 +96,16 @@ class Auth:
 
 
     def valid_login(self, email: str, password: str) -> bool:
-        """Is valid."""
+        """
+        Validates user login credentials.
+
+        Args:
+            email (str): The email of the user attempting to log in.
+            password (str): The password of the user attempting to log in.
+
+        Returns:
+            tuple: A tuple containing a boolean indicating if the login is valid and an integer status code.
+        """
         u = self.users.find_one({ 'email': email })
         if not u:
             return (False, 0)
@@ -67,5 +118,13 @@ class Auth:
 
     @staticmethod
     def hash_password(password: str):
-        """Hash given pass."""
+        """
+        Hashes a password using bcrypt.
+
+        Args:
+            password (str): The password to be hashed.
+
+        Returns:
+            str: The hashed password.
+        """
         return bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()

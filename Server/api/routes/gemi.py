@@ -1,12 +1,27 @@
+"""
+gemi.py
+
+This module defines the GEmeni class, which interacts with the Gemini API to generate recipes based on user-provided
+ingredients or recipe topics. It sends requests to the API and processes the responses to return detailed recipes
+in JSON format.
+
+Classes:
+    GEmeni: A class to interact with the Gemini API for generating recipes.
+
+Functions:
+    __init__(self, key): Initializes the GEmeni class with the API key and predefined prompt data.
+    ask(self, question, qtype=1): Sends a question to Gemini and returns a recipe in JSON format.
+"""
+
 import json
 import requests
 
-
+# Headers for the API requests
 headers = {
     'Content-Type': 'application/json',
 }
 
-# default data template for API requests
+# Default data template for API requests
 data = {
     "contents": [],
     "generationConfig": {
@@ -19,9 +34,22 @@ data = {
 }
 
 class GEmeni:
+    """
+    A class to interact with the Gemini API for generating recipes.
+
+    Attributes:
+        url (str): The API endpoint for Gemini.
+        data1 (dict): The prompt data for generating recipes based on leftover ingredients.
+        data2 (dict): The prompt data for generating recipes based on a given name or topic.
+    """
+
     def __init__(self, key):
-        """Initialize the GEmeni class with the API key and predefined prompt data."""
-        
+        """
+        Initialize the GEmeni class with the API key and predefined prompt data.
+
+        Args:
+            key (str): The API key for accessing the Gemini service.
+        """
         # API endpoint for Gemini
         self.url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={key}"
         
