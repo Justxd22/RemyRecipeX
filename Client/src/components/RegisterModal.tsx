@@ -1,6 +1,14 @@
 import React, { FC } from "react";
-import { FaUser, FaLock, FaTimes } from "react-icons/fa";
-import "../assets/stylesheets/Home.css"; // Ensure you still use the same styles
+import { FaUser, FaLock } from "react-icons/fa";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 
 interface RegisterModalProps {
   name: string;
@@ -26,61 +34,64 @@ const RegisterModal: FC<RegisterModalProps> = ({
   openLoginModal,
 }) => {
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <form onSubmit={onSubmit}>
-          <button type="button" className="close-modal" onClick={onClose}>
-            <FaTimes className="icon" />
-          </button>
-          <h1>Register</h1>
-          <div className="input-box">
-            <input
-              type="text"
-              placeholder="Name"
-              required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <FaUser className="icon" />
+    <Dialog open onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-[425px] mx-auto">
+        <DialogHeader>
+          <DialogTitle className="text-center">Register</DialogTitle>
+        </DialogHeader>
+        <form onSubmit={onSubmit} className="space-y-6">
+          <div className="space-y-4">
+            <div className="relative">
+              <Input
+                type="text"
+                placeholder="Name"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <FaUser className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+            </div>
+            <div className="relative">
+              <Input
+                type="email"
+                placeholder="Email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <FaUser className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+            </div>
+            <div className="relative">
+              <Input
+                type="password"
+                placeholder="Password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <FaLock className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+            </div>
           </div>
-          <div className="input-box">
-            <input
-              type="text"
-              placeholder="Email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <FaUser className="icon" />
-          </div>
-          <div className="input-box">
-            <input
-              type="password"
-              placeholder="Password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <FaLock className="icon" />
-          </div>
-          <button className="loginB" type="submit">
-            Register
-          </button>
-          <div className="register-link">
-            <p>
-              Already have an account?{" "}
-              <button
-                type="button"
-                className="regbutton"
-                onClick={openLoginModal}
-              >
-                Login
-              </button>
-            </p>
-          </div>
+          <DialogFooter>
+            <Button className="w-full" type="submit">
+              Register
+            </Button>
+          </DialogFooter>
         </form>
-      </div>
-    </div>
+        <div className="text-center mt-4">
+          <p className="text-sm">
+            Already have an account?{" "}
+            <button
+              type="button"
+              className="text-blue-600 hover:underline"
+              onClick={openLoginModal}
+            >
+              Login
+            </button>
+          </p>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 };
 
