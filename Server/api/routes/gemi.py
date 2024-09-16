@@ -6,6 +6,7 @@ headers = {
     'Content-Type': 'application/json',
 }
 
+# default data template for API requests
 data = {
     "contents": [],
     "generationConfig": {
