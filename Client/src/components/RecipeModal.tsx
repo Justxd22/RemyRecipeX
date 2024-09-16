@@ -24,7 +24,6 @@ const RecipeModal = () => {
     (state: RootState) => state.dialog.responseDialog
   ) as boolean;
 
-
   let recipe: Recipe | null = null;
   if (recipeResponse) {
     try {
@@ -40,7 +39,7 @@ const RecipeModal = () => {
 
   return (
     <Dialog open={openDialog}>
-      <DialogContent className="sm:max-w-[90%] md:max-w-[70%] overflow-y-scroll text-white response_modal">
+      <DialogContent className="sm:max-w-[90%] md:max-w-[50%] overflow-y-scroll text-white response_modal">
         <DialogHeader>
           <DialogTitle className="font-extrabold text-2xl">
             {recipe ? recipe.name : "Recipe Details"}
@@ -92,16 +91,20 @@ const RecipeModal = () => {
         </h2>
         {movie ? (
           <div className="flex flex-col gap-4 text-white">
-            <img
-              src={movie.image}
-              alt={movie.name}
-              className="w-[80%] md:w-[26%] h-[500px] rounded-sm"
-            />
-            <h1 className="font-bold text-green-500">{movie.name}</h1>
-            <p className="w-full md:w-[80%] text-justify">{movie.desc}</p>
-            <p>
-              Lang: <span className="text-green-500">{movie.lang}</span>
-            </p>
+            <div className="w-full flex justify-start gap-2 flex-col-reverse md:flex-row">
+              <div className="w-full flex flex-col">
+                <h1 className="font-bold text-green-500">{movie.name}</h1>
+                <p className="w-full md:w-[80%] text-justify">{movie.desc}</p>
+                <p>
+                  Lang: <span className="text-green-500">{movie.lang}</span>
+                </p>
+              </div>
+              <img
+                src={movie.image}
+                alt={movie.name}
+                className="w-[80%] md:w-[200px] h-[300px] rounded-sm"
+              />
+            </div>
           </div>
         ) : (
           <p>Loading...</p>
