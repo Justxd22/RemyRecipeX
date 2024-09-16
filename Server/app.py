@@ -28,8 +28,8 @@ def create_app():
     app.config.update(
         SESSION_COOKIE_SECURE=False,  # Ensure cookies are only sent over HTTPS
         SESSION_COOKIE_HTTPONLY=True,  # Prevent JavaScript access to session cookie
-        # SESSION_COOKIE_SAMESITE=app.config["SAMESITE_POLICY"],  # Restrict cookie sending for cross-site requests
-        SESSION_COOKIE_SAMESITE='Lax',  # Restrict cookie sending for cross-site requests
+        SESSION_COOKIE_SAMESITE=app.config["SAMESITE_POLICY"],  # Restrict cookie sending for cross-site requests
+        # SESSION_COOKIE_SAMESITE='Lax',  # Restrict cookie sending for cross-site requests
         PERMANENT_SESSION_LIFETIME=timedelta(minutes=90),  # Set session lifetime
     )
 
@@ -40,6 +40,7 @@ def create_app():
                 {
                     "origins": app.config["CORS_CONFIG"]["CORS_ORIGINS"],
                     "methods": app.config["CORS_CONFIG"]["CORS_METHODS"],
+                    "supports_credentials": True
                     }
                 },
         supports_credentials=app.config["CORS_SUPPORTS_CREDENTIALS"].lower() == 'true',
@@ -50,6 +51,7 @@ def create_app():
     #     resources={r"/*": {"origins": "*", "methods": "*"}},
     #     supports_credentials=app.config["CORS_SUPPORTS_CREDENTIALS"].lower() == 'true',
     # )
+    # CORS(app, supports_credentials=True, origins="http://127.0.0.1:5173")
     app.config['SESSION_TYPE'] = 'filesystem'
     Session(app)
 

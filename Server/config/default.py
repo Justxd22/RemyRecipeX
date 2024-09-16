@@ -11,7 +11,7 @@ class BaseConfig:
     MONGO_URI = os.getenv("MONGO_URI", 'mongodb://localhost:27017')
 
     CORS_SUPPORTS_CREDENTIALS = os.getenv("CORS_SUPPORTS_CREDENTIALS", 'false')
-    SAMESITE_POLICY = os.getenv("SESSION_COOKIE_SAMESITE", 'Lax')
+    SAMESITE_POLICY = os.getenv("SESSION_COOKIE_SAMESITE", 'None')
 
     DEBUG = os.getenv("DEBUG", True)
     SECRET_KEY = os.getenv("SECRET_KEY", "FLASK-RemyRecipeX-APP")
