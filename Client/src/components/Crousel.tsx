@@ -54,13 +54,13 @@ const SuggestionsCarousel: React.FC<SuggestionsCarouselProps> = ({ handleSuggest
       opts={{
         align: "start",
       }}
-      className="w-[60%] 2xl:w-[80%] mx-auto max-h-96 2xl:pb-20 bg-gradient-to-t from-[rgba(238,171,117,0.8)] to-[rgba(194,180,134,0.0)] shadow-[0_12px_12px_rgba(0,0,0,0.1)]"
+      className="w-[60%] 2xl:w-[80%] mx-auto max-h-96 mb-10 rounded-b-3xl bg-gradient-to-t from-[rgba(238,171,117,0.8)] to-[rgba(194,180,134,0.0)] shadow-[0_12px_12px_rgba(0,0,0,0.1)]"
     >
-      <CarouselContent >
+      <CarouselContent>
         {suggestions.map((suggestion, index) => (
           <CarouselItem 
           key={index} 
-          className="basis-1/2 md:basis-1/4 lg:basis-1/5 2xl:basis-1/3"
+          className="basis-1/2 md:basis-1/4 lg:basis-1/5"
           onClick={() => handleSuggestionClick(suggestion.title)}>
             <div className="p-1">
               <Card>
