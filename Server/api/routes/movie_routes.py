@@ -4,7 +4,7 @@ import random, requests
 
 movie_bp = Blueprint('movie', __name__)
 api_key = None
-discover_url = "https://api.themoviedb.org/3/discover/movie/?api_key="
+discover_url = "https://api.themoviedb.org/3/discover/movie?api_key="
 keyword_url = "https://api.themoviedb.org/3/search/keyword?api_key="
 movie_url = "https://api.themoviedb.org/3/movie/"
 image_url = "https://image.tmdb.org/t/p/w500/"
@@ -44,7 +44,7 @@ def ask():
         reslen = len(res)
         movie = res[random.randint(0, reslen)]
         movie_id = movie['id']
-        res = requests.get(movie_url + movie_id + '/?api_key=' + api_key)
+        res = requests.get(movie_url + str(movie_id) + '?api_key=' + api_key)
         if not res.status_code == 200:
             print(str(f"Error: f{res.text}"), 500)
             return jsonify({"message": str(f"Error: f{res.text}")}), 500
