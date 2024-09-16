@@ -19,6 +19,14 @@ import suggestion5 from "../assets/images/suggestion5.png";
 import suggestion6 from "../assets/images/suggestion6.png";
 import suggestion7 from "../assets/images/suggestion7.png";
 import suggestion8 from "../assets/images/suggestion8.png";
+import suggestion9 from "../assets/images/suggestion9.png";
+import suggestion10 from "../assets/images/suggestion10.png";
+import suggestion11 from "../assets/images/suggestion11.png";
+import suggestion12 from "../assets/images/suggestion12.png";
+import suggestion13 from "../assets/images/suggestion13.png";
+import suggestion14 from "../assets/images/suggestion14.png";
+import suggestion15 from "../assets/images/suggestion15.png";
+import suggestion16 from "../assets/images/suggestion16.png";
 import Spinner from "./Spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { setResponse } from "../state/responseSlice";
@@ -38,10 +46,18 @@ const suggestions = [
   { title: "Sweet & Sour", image: suggestion2 },
   { title: "Bacon", image: suggestion3 },
   { title: "Rice", image: suggestion4 },
-  { title: "Pasta", image: suggestion5 }, // Add more suggestions as needed
-  { title: "Salad", image: suggestion6 },
-  { title: "Burger", image: suggestion7 },
-  { title: "Pizza", image: suggestion8 },
+  { title: "Cookies", image: suggestion5 }, // Add more suggestions as needed
+  { title: "Sushi", image: suggestion6 },
+  { title: "Pizza", image: suggestion7 },
+  { title: "Shawerma", image: suggestion8 },
+  { title: "Crepe", image: suggestion9 },
+  { title: "Koshari", image: suggestion10 },
+  { title: "Couscous", image: suggestion11 },
+  { title: "Steak", image: suggestion12 },
+  { title: "Smashed Potatos", image: suggestion13 },
+  { title: "Confit Byaldi", image: suggestion14 },
+  { title: "Kebab", image: suggestion15 },
+  { title: "Molten Cake", image: suggestion16 },
 ];
 
 const Home: FC = () => {
