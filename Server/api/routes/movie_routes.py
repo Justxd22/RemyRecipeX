@@ -83,6 +83,7 @@ def ask(retry_count=0):
 
 
 def init_movie_routes(key):
+    print("KEYYYY", key)
     global discover_url
     global keyword_url
     global api_key
