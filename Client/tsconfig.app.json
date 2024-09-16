@@ -6,6 +6,13 @@
     "module": "ESNext",
     "skipLibCheck": true,
 
+    /* custom edit for shadcn */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
