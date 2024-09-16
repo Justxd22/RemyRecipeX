@@ -10,28 +10,20 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { MovieData, Recipe } from "../lib/types";
+import {  MovieData, Recipe } from "../lib/types";
 import "../assets/stylesheets/updatedHome.css";
 const RecipeModal = () => {
   const dispatch = useDispatch();
   const recipeResponse = useSelector(
     (state: RootState) => state.response.geminiResponse
   ) as string | null;
-  const movieData = useSelector(
+  const movie = useSelector(
     (state: RootState) => state.response.movieResponse
-  ) as string | null;
+  ) as MovieData | null;
   const openDialog = useSelector(
     (state: RootState) => state.dialog.responseDialog
   ) as boolean;
 
-  let movie: MovieData | null = null;
-  if (movieData) {
-    try {
-      movie = JSON.parse(movieData) as MovieData;
-    } catch (e) {
-      console.error("Error parsing movie JSON:", e);
-    }
-  }
   console.log('Movie data:', movie);
 
   let recipe: Recipe | null = null;
@@ -101,10 +93,10 @@ const RecipeModal = () => {
         </h2>
         {movie ? (
           <div className="flex flex-col gap-4 text-white">
-            <img src={movie.image} alt={movie.name} className="w-full h-32"/>
+            <img src={movie.image} alt={movie.name} className="w-[26%] h-[500px] rounded-sm"/>
             <h1 className="font-bold text-green-500">{movie.name}</h1>
-            <p>{movie.desc}</p>
-            <span>{movie.lang}</span>
+            <p className="w-[80%] text-justify">{movie.desc}</p>
+            <p >Lang:{" "}<span className="text-green-500">{movie.lang}</span></p>
           </div>
         ) : (
           <p>Loading...</p>
@@ -112,7 +104,7 @@ const RecipeModal = () => {
         <DialogFooter>
           <Button
             onClick={handleClose}
-            className="w-full bg-white text-black hover:bg-custom-bg hover:text-white"
+            className="w-[80%] bg-white text-black hover:bg-custom-bg hover:text-white py-4"
           >
             Close
           </Button>

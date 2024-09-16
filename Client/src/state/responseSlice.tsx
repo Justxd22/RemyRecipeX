@@ -21,7 +21,7 @@ const registerSlice = createSlice({
     },
     setMovie:(state, action: PayloadAction<MovieData>) => {
       state.movieResponse = action.payload;
-    //   console.log('from slice', action.payload)
+      // console.log('movie from slice', action.payload)
     },
   },
 });
