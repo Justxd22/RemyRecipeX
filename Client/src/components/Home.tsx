@@ -265,6 +265,10 @@ const Home: FC = () => {
   };
 
   const handleSuggestionClick = async (title: string) => {
+    if (!isLoggedIn) {
+      setShowModal(true);
+      return;
+    }
     setLoading(true); // Set loading to true when search starts
     fetchMovieData();
     try {
@@ -358,9 +362,7 @@ const Home: FC = () => {
       )}
       {/* Loading Spinner */}
       {loading && <Spinner />} {/* Show loading spinner while fetching data */}
-      {responseDialog && (
-          <RecipeModal />
-      )}
+      {responseDialog && <RecipeModal />}
       <SuggestionsCarousel handleSuggestionClick={handleSuggestionClick} />
     </div>
   );
