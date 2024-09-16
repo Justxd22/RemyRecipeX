@@ -78,5 +78,6 @@ def check_session():
         return jsonify({"code": 0}), 400
 
 def init_auth_routes(auth):
+    '''Adds auth as a global variable'''
     global AUTH
     AUTH = auth
