@@ -1,5 +1,4 @@
 import React, { FC, useState, useEffect } from "react";
-import { FaArrowRight } from "react-icons/fa";
 import "../assets/stylesheets/updatedHome.css";
 import LogoN from "../assets/images/LogoN.png";
 import text from "../assets/images/text.png";
@@ -12,7 +11,6 @@ import { setResponse } from "../state/responseSlice";
 import { openResponseDialog } from "../state/dialogSlice";
 import { RootState } from "../state/store";
 import { toast } from "sonner";
-// import { Input } from "@/components/ui/input";
 import SuggestionsCarousel from "./Crousel";
 import { LuSendHorizonal } from "react-icons/lu";
 import { Textarea } from "@/components/ui/textarea";
@@ -28,8 +26,6 @@ const Home: FC = () => {
   const [inputValue, setInputValue] = useState("");
   const [loading, setLoading] = useState(false); // New loading state
   const [placeholderText, setPlaceholderText] = useState("");
-  // const [recipeData, setRecipeData] = useState<Recipe | null>(null);
-  // const [showRecipeModal, setShowRecipeModal] = useState(false);
   const [textIndex, setTextIndex] = useState(0);
   const [animationPhase, setAnimationPhase] = useState<
     "typing" | "pause" | "deleting" | "waiting"
@@ -78,8 +74,6 @@ const Home: FC = () => {
 
     isValid();
   }, []);
-
-  // const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     if (inputValue !== "") {
@@ -132,25 +126,6 @@ const Home: FC = () => {
     setInputValue(e.target.value);
   };
 
-  // const nextSlide = () => {
-  //   setCurrentIndex((prevIndex) => (prevIndex + 1) % suggestions.length);
-  // };
-
-  // const prevSlide = () => {
-  //   setCurrentIndex(
-  //     (prevIndex) => (prevIndex - 1 + suggestions.length) % suggestions.length
-  //   );
-  // };
-
-  // const getVisibleSuggestions = () => {
-  //   const visibleSuggestions = [];
-  //   for (let i = 0; i < 4; i++) {
-  //     const index = (currentIndex + i) % suggestions.length;
-  //     visibleSuggestions.push(suggestions[index]);
-  //   }
-  //   return visibleSuggestions;
-  // };
-
   const handleInputFocus = () => {
     if (inputValue === "") {
       setPlaceholderText("");
@@ -175,10 +150,6 @@ const Home: FC = () => {
     setShowModal(true);
     setShowRegisterModal(false);
   };
-
-  // const closeRecipeModal = () => {
-  //   setShowRecipeModal(false);
-  // };
 
   const handleModalClose = () => {
     setShowModal(false);
@@ -255,7 +226,8 @@ const Home: FC = () => {
         credentials: "include", // Include credentials to save cookies, only in cross-origin requests
       });
 
-      
+      const data = await response.json();
+
       if (response.ok) {
         // console.log("Answer successful:", data);
         dispatch(setResponse(data));
@@ -287,11 +259,10 @@ const Home: FC = () => {
         credentials: "include", // Include credentials to save cookies, only in cross-origin requests
       });
 
-      
       if (response.ok) {
         // console.log("Answer successful:", data);
         dispatch(setResponse(await response.json()));
-        dispatch(openResponseDialog())
+        dispatch(openResponseDialog());
         // setRecipeData(data); // Store the received data
         setLoading(false); // Stop loading when data is received
         // setShowRecipeModal(true); // Show the modal once data is ready
@@ -306,7 +277,7 @@ const Home: FC = () => {
       console.error("Error occurred:", error);
       setLoading(false); // Stop loading on error
     }
-  }
+  };
 
   return (
     <div className="relative w-full h-screen bg-homeBg bg-no-repeat bg-center bg-cover flex flex-col justify-evenly md:justify-between before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-gradient-to-t before:from-[rgba(150,96,55,0.8)] before:to-[rgba(150,96,55,0)] before:z-0">
