@@ -2,7 +2,7 @@
 from flask import Blueprint, jsonify, request, session
 import random, requests
 
-movie = Blueprint('movie', __name__)
+movie_bp = Blueprint('movie', __name__)
 api_key = None
 discover_url = "https://api.themoviedb.org/3/discover/movie/?api_key="
 keyword_url = "https://api.themoviedb.org/3/search/keyword?api_key="
@@ -11,14 +11,11 @@ image_url = "https://image.tmdb.org/t/p/w500/"
 query = ['cooking', 'food', 'chef', 'restaurant', 'baking', 'kitchen', 'recipe', 'meal', 'food truck', 'barbecue', 'fine dining', 'cooking competition']
 
 
-movie.route("/ask", methods=["GET"])
+@movie_bp.route("/ask", methods=["GET"])
 def ask():
     """MOVIEDB api"""
     if 'email' not in session:
         return jsonify({"message": "Not logged in"}), 400
-    data = request.get_json(silent=True)
-    if data is None:
-        return jsonify({"message": "missing parameters"}), 400
 
     # random discover or keyword search ???
     x = random.randint(1, 2)
