@@ -287,17 +287,17 @@ const Home: FC = () => {
         credentials: "include", // Include credentials to save cookies, only in cross-origin requests
       });
 
-      const data = await response.json();
-
+      
       if (response.ok) {
         // console.log("Answer successful:", data);
-        dispatch(setResponse(data));
+        dispatch(setResponse(await response.json()));
         dispatch(openResponseDialog())
         // setRecipeData(data); // Store the received data
         setLoading(false); // Stop loading when data is received
         // setShowRecipeModal(true); // Show the modal once data is ready
         // alert(data); //For Testing
       } else {
+        const data = await response.json();
         console.error(" failed:", data.message);
         setLoading(false); // Stop loading if the request fails
         alert(` failed: ${data.message}`);
@@ -307,6 +307,38 @@ const Home: FC = () => {
       setLoading(false); // Stop loading on error
     }
   };
+  const handleSuggestionClick = async (title: string) => {
+    setLoading(true); // Set loading to true when search starts
+    try {
+      const response = await fetch("/api/gpt/recipe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ input: title }),
+        credentials: "include", // Include credentials to save cookies, only in cross-origin requests
+      });
+
+      
+      if (response.ok) {
+        // console.log("Answer successful:", data);
+        dispatch(setResponse(await response.json()));
+        dispatch(openResponseDialog())
+        // setRecipeData(data); // Store the received data
+        setLoading(false); // Stop loading when data is received
+        // setShowRecipeModal(true); // Show the modal once data is ready
+        // alert(data); //For Testing
+      } else {
+        const data = await response.json();
+        console.error(" failed:", data.message);
+        setLoading(false); // Stop loading if the request fails
+        alert(` failed: ${data.message}`);
+      }
+    } catch (error) {
+      console.error("Error occurred:", error);
+      setLoading(false); // Stop loading on error
+    }
+  }
 
   return (
     <div className="homeContainer">
@@ -364,7 +396,10 @@ const Home: FC = () => {
       )}
       <div className="suggestionsContainer">
         {getVisibleSuggestions().map((suggestion, index) => (
-          <div key={index} className="suggestion">
+          <div 
+          key={index} className="suggestion"
+          onClick={() => handleSuggestionClick(suggestion.title)} // Call the function with suggestion title
+          style={{ cursor: 'pointer' }}>
             <h3>{suggestion.title}</h3>
             <img src={suggestion.image} alt={suggestion.title} />
           </div>
