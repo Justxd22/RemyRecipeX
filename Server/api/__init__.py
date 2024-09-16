@@ -1,7 +1,7 @@
 from .routes.auth_routes import auth_bp
 from .routes.user_routes import user_bp
 from .routes.gpt_routes import gpt_bp
-from .routes.movie_routes import movie
+from .routes.movie_routes import movie_bp
 
 def init_api(auth, user, gpt, movie_key):
     from .routes.auth_routes import init_auth_routes
