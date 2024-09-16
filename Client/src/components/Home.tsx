@@ -122,7 +122,7 @@ const Home: FC = () => {
     return () => window.clearTimeout(timer);
   }, [placeholderText, animationPhase, textIndex, inputValue]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value);
   };
 
@@ -247,40 +247,40 @@ const Home: FC = () => {
       setLoading(false); // Stop loading on error
     }
   };
-  const handleSuggestionClick = async (title: string) => {
-    setLoading(true); // Set loading to true when search starts
-    try {
-      const response = await fetch("/api/gpt/recipe", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ input: title }),
-        credentials: "include", // Include credentials to save cookies, only in cross-origin requests
-      });
+  // const handleSuggestionClick = async (title: string) => {
+  //   setLoading(true); // Set loading to true when search starts
+  //   try {
+  //     const response = await fetch("/api/gpt/recipe", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ input: title }),
+  //       credentials: "include", // Include credentials to save cookies, only in cross-origin requests
+  //     });
 
-      if (response.ok) {
-        // console.log("Answer successful:", data);
-        dispatch(setResponse(await response.json()));
-        dispatch(openResponseDialog());
-        // setRecipeData(data); // Store the received data
-        setLoading(false); // Stop loading when data is received
-        // setShowRecipeModal(true); // Show the modal once data is ready
-        // alert(data); //For Testing
-      } else {
-        const data = await response.json();
-        console.error(" failed:", data.message);
-        setLoading(false); // Stop loading if the request fails
-        alert(` failed: ${data.message}`);
-      }
-    } catch (error) {
-      console.error("Error occurred:", error);
-      setLoading(false); // Stop loading on error
-    }
-  };
+  //     if (response.ok) {
+  //       // console.log("Answer successful:", data);
+  //       dispatch(setResponse(await response.json()));
+  //       dispatch(openResponseDialog());
+  //       // setRecipeData(data); // Store the received data
+  //       setLoading(false); // Stop loading when data is received
+  //       // setShowRecipeModal(true); // Show the modal once data is ready
+  //       // alert(data); //For Testing
+  //     } else {
+  //       const data = await response.json();
+  //       console.error(" failed:", data.message);
+  //       setLoading(false); // Stop loading if the request fails
+  //       alert(` failed: ${data.message}`);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error occurred:", error);
+  //     setLoading(false); // Stop loading on error
+  //   }
+  // };
 
   return (
-    <div className="relative w-full h-screen bg-homeBg bg-no-repeat bg-center bg-cover flex flex-col justify-evenly md:justify-between before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-gradient-to-t before:from-[rgba(150,96,55,0.8)] before:to-[rgba(150,96,55,0)] before:z-0">
+    <div className="home_container relative w-full h-screen bg-no-repeat bg-center bg-cover flex flex-col justify-evenly md:justify-between before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-gradient-to-t before:from-[rgba(150,96,55,0.8)] before:to-[rgba(150,96,55,0)] before:z-0">
       {/* <img src={Logo} alt="Logo" className="homeLogo" /> */}
       <div className="w-full h-20 flex flex-col justify-center items-center relative">
         <img
@@ -294,9 +294,8 @@ const Home: FC = () => {
           className="homeLogoT w-28 md:w-52 absolute top-[70%] drop-shadow-custom"
         />
       </div>
-      <div className="flex place-items-center justify-center gap-2 mt-28">
+      <div className="flex place-items-center justify-center gap-2 mt-28 z-50">
         <Textarea
-          type="text"
           className="searchBox custom-placeholder w-60 md:w-1/3 py-2 px-4 xl:py-4 xl:px-6 rounded-2xl bg-transparent border-white text-white placeholder:text-gray-300 border-0 bg-gradient-to-b from-[rgba(200,119,53,0.6)] to-[rgba(194,180,134,0.0)] font-sans tracking-wide shadow-[0_-10px_10px_rgba(0,0,0,0.15)] backdrop-blur-sm max-h-[40px]"
           value={inputValue}
           onChange={handleInputChange}
@@ -305,14 +304,11 @@ const Home: FC = () => {
           placeholder={inputValue === "" ? placeholderText : ""}
         />
 
-        {inputValue && (
-          <div
-            onClick={handleSearchClick}
-            className="h-full  hover:cursor-pointer"
-          >
-            <LuSendHorizonal className="search-icon text-main w-fit h-10 my-auto" />
-          </div>
-        )}
+        {/* {inputValue && ( */}
+        <div onClick={handleSearchClick} className="transition-all hover:translate-x-4 duration-500 hover:cursor-pointer">
+          <LuSendHorizonal className="search-icon text-main w-fit h-10 my-auto" />
+        </div>
+        {/* )} */}
       </div>
       {showModal && (
         <LoginModal
