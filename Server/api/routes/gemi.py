@@ -39,6 +39,8 @@ class GEmeni:
             }],
             },
           ]
+        
+        # Set up prompt data to generate the recipe based on the topic or name
         self.data2 = data
         self.data2["contents"] = [
             {
