@@ -82,6 +82,74 @@ def ask(retry_count=0):
     return jsonify(data), 200
 
 
+
+def askk(retry_count=0):
+    """MOVIEDB api"""
+
+    # random discover or keyword search ???
+    x = random.randint(1, 2)
+    data = {
+        'image': '',
+        'name': '',
+        'desc': '',
+        'lang': '',
+    }
+    if x == 1:
+        res = requests.get(discover_url + "&page=" + str(random.randint(1, 5)))
+        print(res.url)
+        if not res.status_code == 200:
+            if '34' in res.text:
+                print("Recall func")
+                if retry_count < max_retries:
+                    return ask(retry_count + 1)
+                else:
+                    return {"message": "Max retry limit reached"}, 500
+            print(str(f"Error: f{res.text}"), 500)
+            return {"message": str(f"Error: f{res.text}")}, 500
+        print(res)
+        res = res.json()['results']
+        reslen = len(res)
+        movie = res[random.randint(0, reslen - 1)]
+    else:
+        res = requests.get(keyword_url + '&sort_by=popularity.desc&query=' + random.choice(query))
+        print(res.url)
+        if not res.status_code == 200:
+            if '34' in res.text:
+                print("Recall func")
+                if retry_count < max_retries:
+                    return ask(retry_count + 1)
+                else:
+                    return {"message": "Max retry limit reached"}, 500
+            print(str(f"Error: f{res.text}"), 500)
+            return {"message": str(f"Error: f{res.text}")}, 500
+        print(res)
+        res = res.json()['results']
+        reslen = len(res)
+        movie = res[random.randint(0, reslen - 1)]
+        movie_id = movie['id']
+        res = requests.get(movie_url + str(movie_id) + '?api_key=' + api_key)
+        print(res.url)
+        if not res.status_code == 200:
+            if '34' in res.text:
+                print("Recall func")
+                if retry_count < max_retries:
+                    return ask(retry_count + 1)
+                else:
+                    return {"message": "Max retry limit reached"}, 500
+            print(str(f"Error: f{res.text}"), 500)
+            return {"message": str(f"Error: f{res.text}")}, 500
+        print(res)
+        movie = res.json()
+
+    if movie['poster_path']:
+        data['image'] = image_url + movie['poster_path']
+    data['desc'] = movie['overview']
+    data['name'] = movie['title']
+    data['lang'] = movie['original_language']
+
+    return data , 200
+
+
 def init_movie_routes(key):
     print("KEYYYY", key)
     global discover_url
@@ -90,3 +158,5 @@ def init_movie_routes(key):
     keyword_url = keyword_url + key
     discover_url = discover_url + key
     api_key = key
+    ii, iii = askk()
+    print(ii, iii)
