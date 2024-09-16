@@ -20,7 +20,7 @@ data = {
 
 class GEmeni:
     def __init__(self, key):
-        """hi."""
+        """Initialize the GEmeni class with the API key and predefined prompt data."""
         # Create the model
         self.url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={key}"
         self.data1 = data
