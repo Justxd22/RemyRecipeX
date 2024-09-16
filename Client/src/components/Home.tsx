@@ -239,7 +239,6 @@ const Home: FC = () => {
 
   const handleSearchClick = async () => {
     setLoading(true); // Set loading to true when search starts
-    fetchMovieData();
     try {
       const response = await fetch("/api/gpt/ask", {
         method: "POST",
@@ -275,6 +274,7 @@ const Home: FC = () => {
 
   const handleSuggestionClick = async (title: string) => {
     setLoading(true); // Set loading to true when search starts
+    fetchMovieData();
     try {
       const response = await fetch("/api/gpt/recipe", {
         method: "POST",
