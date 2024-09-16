@@ -65,7 +65,7 @@ const SuggestionsCarousel: React.FC<SuggestionsCarouselProps> = ({ handleSuggest
             <div className="p-1">
               <Card>
                 <CardContent className="flex flex-col items-center justify-center p-6">
-                  <p className="text-6 md:text-2xl font-courgette  font-semibold mb-2 text-center text-[#fde6b5]">
+                  <p className="text-6 md:text-2xl font-courgette  font-semibold mb-2 text-center text-[#fde6b5] text-nowrap">
                     {suggestion.title}
                   </p>
                   <img
