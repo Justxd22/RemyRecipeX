@@ -74,6 +74,7 @@ class GEmeni:
         rules = "create in detail a good recipe to cook in JSON format. Include item names and quantities for the recipe, if asked for anything else please answer with 'Please provide me with your leftovers so i can help you make a food recipe to reduce food waste.' you have to strictly reply to that in case the question is out of cooking context, be creative like a professional chief, your name is Remy, always stick to the Json format for outputting even when user is out of context. Question: "
         if qtype == 2: rules = "Given a recipe topic or name, be creative, add things to make it more delicious, " + rules
         else: rules = "Given leftovers ingredients, " + rules
+        # Append the user's question to the prompt
         self._data["contents"].append(
             {
                 "role": "user",
