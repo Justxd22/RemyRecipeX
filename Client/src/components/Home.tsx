@@ -24,7 +24,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setResponse } from "../state/responseSlice";
 import { openResponseDialog } from "../state/dialogSlice";
 import { RootState } from "../state/store";
-// import { Recipe } from "../lib/types";
+import { toast } from "sonner"
+import Carousel  from "./Crousel";
 
 const typingTexts = [
   "Let's cook!",
@@ -221,6 +222,7 @@ const Home: FC = () => {
 
       if (response.ok) {
         console.log("Login successful:", data);
+        toast("Login successful")
         window.location.href = "/";
       } else {
         console.error("Login failed:", data.message);
@@ -249,6 +251,7 @@ const Home: FC = () => {
 
       if (response.ok) {
         console.log("Register successful:", data);
+        toast("Register successful")
         closeRegisterModal();
       } else {
         console.error("Register failed:", data.message);
@@ -346,6 +349,7 @@ const Home: FC = () => {
           <RecipeModal />
         </>
       )}
+      <Carousel />
       <div className="suggestionsContainer">
         {getVisibleSuggestions().map((suggestion, index) => (
           <div key={index} className="suggestion">
