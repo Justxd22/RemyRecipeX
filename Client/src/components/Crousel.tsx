@@ -60,7 +60,7 @@ const SuggestionsCarousel: React.FC<SuggestionsCarouselProps> = ({ handleSuggest
         {suggestions.map((suggestion, index) => (
           <CarouselItem 
           key={index} 
-          className="basis-1/2 md:basis-1/4 lg:basis-1/5"
+          className="basis-1/2 md:basis-1/4 lg:basis-1/5 cursor-pointer"
           onClick={() => handleSuggestionClick(suggestion.title)}>
             <div className="p-1">
               <Card>
