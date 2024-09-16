@@ -30,10 +30,29 @@ def ask():
     if not ingred:
         return jsonify({"message": "missing parameters"}), 400
 
-    ans = gem.ask(ingred)
+    ans, code = gem.ask(ingred, qtype=1)
+    if code != 200:
+        return jsonify({"message": ans}), 500 
     print(ans, type(ans))
     return jsonify(ans), 200
 
+@gpt_bp.route("/recipe", methods=["POST"])
+def recipe():
+    """Retrieve receipi info."""
+    if 'email' not in session:
+        return jsonify({"message": "Not logged in"}), 400
+    data = request.get_json(silent=True)
+    if data is None:
+        return jsonify({"message": "missing parameters"}), 400
+    ingred = data.get("input")
+    if not ingred:
+        return jsonify({"message": "missing parameters"}), 400
+
+    ans, code = gem.ask(ingred, qtype=2)
+    if code != 200:
+        return jsonify({"message": ans}), 500 
+    print(ans, type(ans))
+    return jsonify(ans), 200
 
 def init_gpt_routes(gem_key):
     global gem

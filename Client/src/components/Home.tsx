@@ -284,7 +284,7 @@ const Home: FC = () => {
       } else {
         console.error(" failed:", data.message);
         setLoading(false); // Stop loading if the request fails
-        // alert(` failed: ${data.message}`);
+        alert(` failed: ${data.message}`);
       }
     } catch (error) {
       console.error("Error occurred:", error);
