@@ -57,7 +57,19 @@ class GEmeni:
         
 
     def ask(self, question, qtype=1):
-        """Send a question."""
+        """
+        Send a question to Gemini and return a recipe in JSON format.
+        
+        Args:
+            question (str): The question or recipe request from the user.
+            qtype (int):
+                1 for asking based on leftover ingredients,
+                2 for a recipe based on a given name or topic.
+        
+        Returns:
+            tuple: The generated recipe in JSON format and a status code (200 for success, 500 for error).
+        """
+        
         self._data = self.data1 if qtype == 1 else self.data2
         rules = "create in detail a good recipe to cook in JSON format. Include item names and quantities for the recipe, if asked for anything else please answer with 'Please provide me with your leftovers so i can help you make a food recipe to reduce food waste.' you have to strictly reply to that in case the question is out of cooking context, be creative like a professional chief, your name is Remy, always stick to the Json format for outputting even when user is out of context. Question: "
         if qtype == 2: rules = "Given a recipe topic or name, be creative, add things to make it more delicious, " + rules
