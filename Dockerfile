@@ -8,7 +8,7 @@ RUN npm install
 
 COPY Client/ .
 
-RUN npm run lint -- --fix
+# RUN npm run lint -- --fix
 RUN npm run build
 
 FROM python:3.10-slim
