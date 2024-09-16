@@ -8,6 +8,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "buildc": "tsc -b && vite build && powershell Remove-Item -Recurse -Force ../Server/static/* && powershell Copy-Item -Recurse -Force ./dist/* ../Server/static/",
+    "buildl": "tsc -b && vite build && rm -rf ../Server/static/* && cp -r ./dist/* ../Server/static/",
     "lint": "eslint .",
     "preview": "vite preview"
   },

@@ -215,77 +215,63 @@ const Home: FC = () => {
     }
   };
 
-  // const fetchMovieData = async () => {
-  //   try {
-  //     const response = await fetch("/api/movie/ask", {
-  //       method: "GET",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       credentials: "include", // Include credentials to save cookies, only in cross-origin requests
-  //     });
-  //     if (!response.ok) {
-  //       console.log("first", "error ocured buddy");
-  //       throw new Error("Network response was not ok");
-  //     }
-  //     const data: MovieData = await response.json();
-  //     console.log("data of the movie", data);
-  //     dispatch(setMovie(data));
-  //   } catch (error) {
-  //     console.error("Error fetching movie data:", error);
-  //   }
-  // };
+  const fetchMovieData = async () => {
+    try {
+      const response = await fetch("/api/movie/ask", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include", // Include credentials to save cookies, only in cross-origin requests
+      });
+      if (!response.ok) {
+        console.log("first", "error ocured buddy");
+        throw new Error("Network response was not ok");
+      }
+      const data: MovieData = await response.json();
+      console.log("data of the movie", data);
+      dispatch(setMovie(data));
+      handleSearchClick();
+    } catch (error) {
+      console.error("Error fetching movie data:", error);
+    }
+  };
 
   const handleSearchClick = async () => {
     setLoading(true); // Set loading to true when search starts
-
+    fetchMovieData();
     try {
-        // Fetch recipe data
-        const recipeResponse = await fetch("/api/gpt/ask", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ input: inputValue }),
-            credentials: "include", // Include credentials to save cookies, only in cross-origin requests
-        });
+      const response = await fetch("/api/gpt/ask", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ input: inputValue }),
+        credentials: "include", // Include credentials to save cookies, only in cross-origin requests
+      });
 
-        if (!recipeResponse.ok) {
-            const errorData = await recipeResponse.json();
-            console.error("Recipe fetch failed:", errorData.message);
-            alert(`Recipe fetch failed: ${errorData.message}`);
-            setLoading(false); // Stop loading if the request fails
-            return;
-        }
+      const data = await response.json();
 
-        const recipeData = await recipeResponse.json();
-        dispatch(setResponse(recipeData));
+      if (response.ok) {
+        // console.log("Answer successful:", data);
+        dispatch(setResponse(data));
         dispatch(openResponseDialog());
-
-        // Fetch movie data
-        const movieResponse = await fetch("/api/movie/ask", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials: "include", // Include credentials to save cookies, only in cross-origin requests
-        });
-
-        if (!movieResponse.ok) {
-            console.log("Error occurred while fetching movie data");
-            throw new Error("Network response was not ok");
-        }
-
-        const movieData: MovieData = await movieResponse.json();
-        console.log("Movie data:", movieData);
-        dispatch(setMovie(movieData));
-        
+        // setRecipeData(data); // Store the received data
+        setLoading(false); // Stop loading when data is received
+        // setShowRecipeModal(true); // Show the modal once data is ready
+        // alert(data); //For Testing
+      } else {
+        const data = await response.json();
+        console.error(" failed:", data.message);
+        setLoading(false); // Stop loading if the request fails
+        alert(` failed: ${data.message}`);
+      }
     } catch (error) {
-        console.error("Error occurred:", error);
-    } finally {
-        setLoading(false); // Stop loading in both success and error cases
+      console.error("Error occurred:", error);
+      setLoading(false); // Stop loading on error
     }
-};
+  };
+
 
   const handleSuggestionClick = async (title: string) => {
     setLoading(true); // Set loading to true when search starts
@@ -346,7 +332,7 @@ const Home: FC = () => {
 
         {inputValue && (
           <div
-            onClick={handleSearchClick}
+            onClick={fetchMovieData}
             className="transition-all hover:translate-x-4 duration-500 hover:cursor-pointer"
           >
             <LuSendHorizonal className="search-icon text-main w-fit h-10 my-auto" />

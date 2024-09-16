@@ -7,7 +7,7 @@ api_key = None
 discover_url = "https://api.themoviedb.org/3/discover/movie?api_key="
 keyword_url = "https://api.themoviedb.org/3/search/keyword?api_key="
 movie_url = "https://api.themoviedb.org/3/movie/"
-image_url = "https://image.tmdb.org/t/p/w500/"
+image_url = "https://image.tmdb.org/t/p/w500"
 query = ['cooking', 'food', 'chef', 'restaurant', 'baking', 'kitchen', 'recipe', 'meal', 'food truck', 'barbecue', 'fine dining', 'cooking competition']
 
 
@@ -27,31 +27,41 @@ def ask():
     }
     if x == 1:
         res = requests.get(discover_url + "&page=" + str(random.randint(1, 5)))
+        print(res.url)
         if not res.status_code == 200:
+            j = res.json()
+            if j["status_code"] == 34:
+                print("Recall func")
             print(str(f"Error: f{res.text}"), 500)
             return jsonify({"message": str(f"Error: f{res.text}")}), 500
         print(res)
         res = res.json()['results']
         reslen = len(res)
-        movie = res[random.randint(0, reslen)]
+        print(reslen)
+        movie = res[random.randint(0, reslen - 1)]
     else:
         res = requests.get(keyword_url + '&sort_by=popularity.desc&query=' + random.choice(query))
+        print(res.url)
         if not res.status_code == 200:
             print(str(f"Error: f{res.text}"), 500)
             return jsonify({"message": str(f"Error: f{res.text}")}), 500
         print(res)
         res = res.json()['results']
         reslen = len(res)
-        movie = res[random.randint(0, reslen)]
+        print(reslen)
+        
+        movie = res[random.randint(0, reslen - 1)]
         movie_id = movie['id']
         res = requests.get(movie_url + str(movie_id) + '?api_key=' + api_key)
+        print(res.url)
         if not res.status_code == 200:
             print(str(f"Error: f{res.text}"), 500)
             return jsonify({"message": str(f"Error: f{res.text}")}), 500
         print(res)
         movie = res.json()
 
-    data['image'] = movie['poster_path']
+    if movie['poster_path']:
+        data['image'] = image_url + movie['poster_path']
     data['desc'] = movie['overview']
     data['name'] = movie['title']
     data['lang'] = movie['original_language']
