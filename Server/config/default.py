@@ -7,7 +7,12 @@ class BaseConfig:
     APP_PORT = os.getenv("APP_PORT", 5000)
     GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
     if not GEMINI_API_KEY:
-        print("ERROR GEMENI KEY MISSIN")
+        print("ERROR GEMENI KEY MISSING")
+        exit(1)
+
+    MOVIE_DB = os.getenv("MOVIE_DB")
+    if not MOVIE_DB:
+        print("ERROR MOVIE_DB KEY MISSING")
         exit(1)
 
     MONGO_DATABASE = os.getenv("MONGO_DATABASE", 'remyrecipex')

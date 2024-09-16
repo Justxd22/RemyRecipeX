@@ -68,7 +68,7 @@ def create_app():
     # Initialize API
     auth = Auth(app.db)
     user = User(app.db)
-    init_api(auth, user, app.config['GEMINI_API_KEY'])
+    init_api(auth, user, app.config['GEMINI_API_KEY'], app.config['MOVIE_DB'])
 
     # Apply middleware
     auth_middleware(app)
@@ -85,5 +85,5 @@ if __name__ == '__main__':
     app.run(
         host=app.config['HOST_NAME'],
         port=app.config['APP_PORT'],
-        debug=app.config['DEBUG'].lower() == 'true',
+        debug=app.config['DEBUG'],
         )
