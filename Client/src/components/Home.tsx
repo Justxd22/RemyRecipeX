@@ -231,7 +231,6 @@ const Home: FC = () => {
       const data: MovieData = await response.json();
       console.log("data of the movie", data);
       dispatch(setMovie(data));
-      handleSearchClick();
     } catch (error) {
       console.error("Error fetching movie data:", error);
     }
@@ -239,6 +238,7 @@ const Home: FC = () => {
 
   const handleSearchClick = async () => {
     setLoading(true); // Set loading to true when search starts
+    fetchMovieData();
     try {
       const response = await fetch("/api/gpt/ask", {
         method: "POST",
@@ -332,7 +332,7 @@ const Home: FC = () => {
 
         {inputValue && (
           <div
-            onClick={fetchMovieData}
+            onClick={handleSearchClick}
             className="transition-all hover:translate-x-4 duration-500 hover:cursor-pointer"
           >
             <LuSendHorizonal className="search-icon text-main w-fit h-10 my-auto" />
