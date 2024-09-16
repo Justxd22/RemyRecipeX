@@ -255,8 +255,7 @@ const Home: FC = () => {
         credentials: "include", // Include credentials to save cookies, only in cross-origin requests
       });
 
-      const data = await response.json();
-
+      
       if (response.ok) {
         // console.log("Answer successful:", data);
         dispatch(setResponse(data));
@@ -266,15 +265,48 @@ const Home: FC = () => {
         // setShowRecipeModal(true); // Show the modal once data is ready
         // alert(data); //For Testing
       } else {
+        const data = await response.json();
         console.error(" failed:", data.message);
         setLoading(false); // Stop loading if the request fails
-        // alert(` failed: ${data.message}`);
+        alert(` failed: ${data.message}`);
       }
     } catch (error) {
       console.error("Error occurred:", error);
       setLoading(false); // Stop loading on error
     }
   };
+  const handleSuggestionClick = async (title: string) => {
+    setLoading(true); // Set loading to true when search starts
+    try {
+      const response = await fetch("/api/gpt/recipe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ input: title }),
+        credentials: "include", // Include credentials to save cookies, only in cross-origin requests
+      });
+
+      
+      if (response.ok) {
+        // console.log("Answer successful:", data);
+        dispatch(setResponse(await response.json()));
+        dispatch(openResponseDialog())
+        // setRecipeData(data); // Store the received data
+        setLoading(false); // Stop loading when data is received
+        // setShowRecipeModal(true); // Show the modal once data is ready
+        // alert(data); //For Testing
+      } else {
+        const data = await response.json();
+        console.error(" failed:", data.message);
+        setLoading(false); // Stop loading if the request fails
+        alert(` failed: ${data.message}`);
+      }
+    } catch (error) {
+      console.error("Error occurred:", error);
+      setLoading(false); // Stop loading on error
+    }
+  }
 
   return (
     <div className="relative w-full h-screen bg-homeBg bg-no-repeat bg-center bg-cover flex flex-col justify-evenly md:justify-between before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-gradient-to-t before:from-[rgba(150,96,55,0.8)] before:to-[rgba(150,96,55,0)] before:z-0">
