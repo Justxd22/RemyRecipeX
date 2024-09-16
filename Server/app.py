@@ -1,4 +1,8 @@
-# #!/usr/bin/python3
+"""
+app.py
+
+This module sets up and runs a Flask web application with various configurations, middleware, and blueprints.
+"""
 
 from flask import Flask
 from flask_cors import CORS
@@ -11,6 +15,15 @@ from models.auth import Auth
 from models.user import User
 
 def create_app():
+    """
+    Creates and configures the Flask application.
+
+    This function sets up the Flask app with configurations, initializes the database,
+    registers blueprints, applies middleware, and initializes the API.
+
+    Returns:
+        Flask: The configured Flask application instance.
+    """
     # Import your modules
     from api import auth_bp, user_bp, init_api, gpt_bp
     from errors import error
@@ -21,9 +34,10 @@ def create_app():
     app = Flask(__name__)
     app.secret_key = app.config['SECRET_KEY']
 
-
+    # Load configuration
     app.config.from_object(get_config())
 
+    # Update session and CORS configurations
     app.config.update(
         SESSION_COOKIE_SECURE=False,  # Ensure cookies are only sent over HTTPS
         SESSION_COOKIE_HTTPONLY=True,  # Prevent JavaScript access to session cookie
@@ -79,6 +93,12 @@ app = create_app()
 
 @app.route('/')
 def main_route():
+    """
+    Main route of the application.
+
+    Returns:
+        str: A welcome message.
+    """
     return "hello friend!"
 
 if __name__ == '__main__':
