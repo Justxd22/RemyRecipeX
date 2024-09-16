@@ -2,6 +2,7 @@
 from flask import Blueprint, jsonify, request, session
 from .gemi import GEmeni
 
+# Initialize a Flask blueprint for GPT-related routes
 gpt_bp = Blueprint('gpt', __name__)
 
 @gpt_bp.route("/model", methods=["GET"])
