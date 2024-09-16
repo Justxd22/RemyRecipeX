@@ -47,7 +47,6 @@ const Home: FC = () => {
         credentials: "include",
       });
       const data = await res.json();
-      console.log(data);
       if (data.name) {
         setName(data.name);
         for (let i = 0; i < typingTexts.length; i++) {
@@ -174,7 +173,6 @@ const Home: FC = () => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log("Login successful:", data);
         toast("Login successful");
         window.location.href = "/";
       } else {
@@ -203,7 +201,6 @@ const Home: FC = () => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log("Register successful:", data);
         toast("Register successful");
         closeRegisterModal();
       } else {
@@ -225,11 +222,12 @@ const Home: FC = () => {
         credentials: "include", // Include credentials to save cookies, only in cross-origin requests
       });
       if (!response.ok) {
-        console.log("first", "error ocured buddy");
         throw new Error("Network response was not ok");
       }
       const data: MovieData = await response.json();
-      console.log("data of the movie", data);
+      if (!data.image) {
+        fetchMovieData();
+      }
       dispatch(setMovie(data));
     } catch (error) {
       console.error("Error fetching movie data:", error);
@@ -252,16 +250,13 @@ const Home: FC = () => {
       if (!recipeResponse.ok) {
         const errorData = await recipeResponse.json();
         console.error("Recipe fetch failed:", errorData.message);
-        alert(`Recipe fetch failed: ${errorData.message}`);
         setLoading(false); // Stop loading if the request fails
         return;
       }
 
       const recipeData = await recipeResponse.json();
-      console.log("Recipe data received:", recipeData);
       dispatch(setResponse(recipeData));
       dispatch(openResponseDialog());
-
     } catch (error) {
       console.error("Error occurred:", error);
     } finally {
@@ -283,18 +278,13 @@ const Home: FC = () => {
       });
 
       if (response.ok) {
-        // console.log("Answer successful:", data);
         dispatch(setResponse(await response.json()));
         dispatch(openResponseDialog());
-        // setRecipeData(data); // Store the received data
         setLoading(false); // Stop loading when data is received
-        // setShowRecipeModal(true); // Show the modal once data is ready
-        // alert(data); //For Testing
       } else {
         const data = await response.json();
         console.error(" failed:", data.message);
         setLoading(false); // Stop loading if the request fails
-        alert(` failed: ${data.message}`);
       }
     } catch (error) {
       console.error("Error occurred:", error);
@@ -369,10 +359,7 @@ const Home: FC = () => {
       {/* Loading Spinner */}
       {loading && <Spinner />} {/* Show loading spinner while fetching data */}
       {responseDialog && (
-        <>
-          {console.log("Modal is being triggered")} Add a debug log
           <RecipeModal />
-        </>
       )}
       <SuggestionsCarousel handleSuggestionClick={handleSuggestionClick} />
     </div>

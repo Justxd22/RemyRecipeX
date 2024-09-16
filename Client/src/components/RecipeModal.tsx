@@ -10,7 +10,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import {  MovieData, Recipe } from "../lib/types";
+import { MovieData, Recipe } from "../lib/types";
 import "../assets/stylesheets/updatedHome.css";
 const RecipeModal = () => {
   const dispatch = useDispatch();
@@ -24,7 +24,6 @@ const RecipeModal = () => {
     (state: RootState) => state.dialog.responseDialog
   ) as boolean;
 
-  console.log('Movie data:', movie);
 
   let recipe: Recipe | null = null;
   if (recipeResponse) {
@@ -93,10 +92,16 @@ const RecipeModal = () => {
         </h2>
         {movie ? (
           <div className="flex flex-col gap-4 text-white">
-            <img src={movie.image} alt={movie.name} className="w-[26%] h-[500px] rounded-sm"/>
+            <img
+              src={movie.image}
+              alt={movie.name}
+              className="w-[80%] md:w-[26%] h-[500px] rounded-sm"
+            />
             <h1 className="font-bold text-green-500">{movie.name}</h1>
-            <p className="w-[80%] text-justify">{movie.desc}</p>
-            <p >Lang:{" "}<span className="text-green-500">{movie.lang}</span></p>
+            <p className="w-full md:w-[80%] text-justify">{movie.desc}</p>
+            <p>
+              Lang: <span className="text-green-500">{movie.lang}</span>
+            </p>
           </div>
         ) : (
           <p>Loading...</p>
@@ -104,7 +109,7 @@ const RecipeModal = () => {
         <DialogFooter>
           <Button
             onClick={handleClose}
-            className="w-[80%] bg-white text-black hover:bg-custom-bg hover:text-white py-4"
+            className="w-[80%] bg-white text-black hover:bg-custom-bg hover:text-white mx-auto py-6"
           >
             Close
           </Button>
