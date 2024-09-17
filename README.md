@@ -40,6 +40,8 @@ Feel like watching something while eating the meal? well we got you covered, wit
 - User authentication (register, login, logout)
 - Responsive design for various screen sizes
 - Fast Recipe Generation.
+- Movie Suggestions.
+- Nearby Store Locating.
 
 ## Technology Stack
 
@@ -49,7 +51,7 @@ Feel like watching something while eating the meal? well we got you covered, wit
 - Authentication: Flask sessions
 - WSGI Server: Gunicorn
 - Web Server: Nginx (for production deployment)
-- API Services: Gemini-Chat-API + OMDB(Open Movie DB)-API
+- API Services: Gemini-Chat-API + OMDB(Open Movie DB)-API + GoogleMapsAPI
 
 ## Project Structure
 
