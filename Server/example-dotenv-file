@@ -12,5 +12,6 @@ CORS_SUPPORTS_CREDENTIALS=False
 SESSION_COOKIE_SAMESITE='Lax'
 
 # Required
-MONGO_URI=mongodb://localhost:27017
-GEMINI_API_KEY=0000000000000000000000000000000
+MONGO_URI=mongodb://localhost:27017 #Or Use a MongoDB of your choosing
+GEMINI_API_KEY=Dfefwfefmklfklwemfklweflkewfm
+MOVIE_DB=Dfefwfefmklfklwemfklweflkewfm

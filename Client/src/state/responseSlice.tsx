@@ -14,14 +14,12 @@ const registerSlice = createSlice({
     // Update the PayloadAction type to accept a Recipe object
     setResponse: (state, action: PayloadAction<Recipe>) => {
       state.geminiResponse = action.payload;
-    //   console.log('from slice', action.payload)
     },
     setResError: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
     },
     setMovie:(state, action: PayloadAction<MovieData>) => {
       state.movieResponse = action.payload;
-    //   console.log('from slice', action.payload)
     },
   },
 });

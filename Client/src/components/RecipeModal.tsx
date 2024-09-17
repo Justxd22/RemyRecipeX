@@ -12,46 +12,34 @@ import {
 import { Button } from "@/components/ui/button";
 import { MovieData, Recipe } from "../lib/types";
 import "../assets/stylesheets/updatedHome.css";
-
 const RecipeModal = () => {
   const dispatch = useDispatch();
-  // Retrieve the recipe response from the Redux store
   const recipeResponse = useSelector(
     (state: RootState) => state.response.geminiResponse
   ) as string | null;
-  const movieData = useSelector(
+  const movie = useSelector(
     (state: RootState) => state.response.movieResponse
-  ) as string | null;
+  ) as MovieData | null;
   const openDialog = useSelector(
     (state: RootState) => state.dialog.responseDialog
   ) as boolean;
-  // Parse recipeResponse if it is a JSON string and assign the type as Recipe
-  let movie: MovieData | null = null;
-  if (movieData) {
-    try {
-      movie = JSON.parse(movieData) as MovieData;
-    } catch (e) {
-      console.error("Error parsing JSON:", e);
-    }
-  }
-  console.log('movie', movie)
+
   let recipe: Recipe | null = null;
   if (recipeResponse) {
     try {
       recipe = JSON.parse(recipeResponse) as Recipe;
     } catch (e) {
-      console.error("Error parsing JSON:", e);
+      console.error("Error parsing recipe JSON:", e);
     }
   }
-  // console.log("recipe from the modal", recipe);
-  // Close dialog handler
+
   const handleClose = () => {
     dispatch(closeResponseDialog());
   };
 
   return (
     <Dialog open={openDialog}>
-      <DialogContent className="sm:max-w-[90%] md:max-w-[70%] overflow-y-scroll text-white response_modal">
+      <DialogContent className="sm:max-w-[90%] md:max-w-[50%] overflow-y-scroll text-white response_modal">
         <DialogHeader>
           <DialogTitle className="font-extrabold text-2xl">
             {recipe ? recipe.name : "Recipe Details"}
@@ -86,6 +74,7 @@ const RecipeModal = () => {
         ) : (
           <p>No recipe data available.</p>
         )}
+
         <h2 className="font-semibold text-white">
           Here are some Nearby stores:
         </h2>
@@ -96,15 +85,26 @@ const RecipeModal = () => {
           allowFullScreen
           className="w-full h-96"
         ></iframe>
+
         <h2 className="font-semibold text-white mt-4">
           Here&apos;s a movie to enjoy while chill and eat:
         </h2>
         {movie ? (
           <div className="flex flex-col gap-4 text-white">
-            <img src={movie.image} alt={movie.name} className="w-full h-32"/>
-            <h1 className="font-bold text-green-500">{movie.name}</h1>
-            <p>{movie.desc}</p>
-            <span>{movie.lang}</span>
+            <div className="w-full flex justify-start gap-2 flex-col-reverse md:flex-row">
+              <div className="w-full flex flex-col">
+                <h1 className="font-bold text-green-500">{movie.name}</h1>
+                <p className="w-full md:w-[80%] text-justify">{movie.desc}</p>
+                <p>
+                  Lang: <span className="text-green-500">{movie.lang}</span>
+                </p>
+              </div>
+              <img
+                src={movie.image}
+                alt={movie.name}
+                className="w-[80%] md:w-[200px] h-[300px] rounded-sm"
+              />
+            </div>
           </div>
         ) : (
           <p>Loading...</p>
@@ -112,7 +112,7 @@ const RecipeModal = () => {
         <DialogFooter>
           <Button
             onClick={handleClose}
-            className="w-full bg-white text-black hover:bg-custom-bg hover:text-white"
+            className="w-[80%] bg-white text-black hover:bg-custom-bg hover:text-white mx-auto py-6"
           >
             Close
           </Button>

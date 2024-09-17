@@ -21,8 +21,8 @@ export type Recipe = {
 // Update your Redux state to store the Recipe object
 export type ResponseState = {
   geminiResponse: Recipe | null; // Can be null initially
-  error: string;
   movieResponse: MovieData | null;
+  error: string;
 };
 
 
