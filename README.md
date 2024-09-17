@@ -56,27 +56,105 @@ Feel like watching something while eating the meal? well we got you covered, wit
 RemyRecipeX/
 .
 ├── Client
-│   ├── README.md
+│   ├── components.json
 │   ├── dist
 │   │   ├── assets
-│   │   │   ├── index-BStUhQb-.js
-│   │   │   ├── index-DiwrgTda.css
-│   │   │   └── react-CHdo91hT.svg
-│   │   └── index.html
+│   │   │   ├── Background-Bq1jNvTS.jpg
+│   │   │   ├── LogoN-DntnNkqz.png
+│   │   │   ├── index-Ds1_JCfB.css
+│   │   │   ├── index-np7zopBB.js
+│   │   │   ├── suggestion1-DQh46pk3.png
+│   │   │   ├── suggestion10-BorAJkHO.png
+│   │   │   ├── suggestion11-nD4MaWa7.png
+│   │   │   ├── suggestion12-CoLSFW0W.png
+│   │   │   ├── suggestion13-BD2CNVMu.png
+│   │   │   ├── suggestion14-CAIsJVOw.png
+│   │   │   ├── suggestion15-zIvGRDFL.png
+│   │   │   ├── suggestion16-B-mwjjjG.png
+│   │   │   ├── suggestion2-BXBfSqVr.png
+│   │   │   ├── suggestion3-AOQt_3Mc.png
+│   │   │   ├── suggestion4-DLNAoKFN.png
+│   │   │   ├── suggestion5-XeveYIAI.png
+│   │   │   ├── suggestion6-Db6iMs_w.png
+│   │   │   ├── suggestion7-zaewGM4x.png
+│   │   │   ├── suggestion8-9Cm8TdxB.png
+│   │   │   ├── suggestion9-Bwlar1SB.png
+│   │   │   └── text-DXJ1yRfP.png
+│   │   ├── favicon.ico
+│   │   ├── index.html
+│   │   └── lottie
+│   │       └── m12uodkj.lottie
 │   ├── eslint.config.js
 │   ├── index.html
 │   ├── package-lock.json
 │   ├── package.json
+│   ├── postcss.config.js
 │   ├── public
+│   │   ├── favicon.ico
+│   │   └── lottie
+│   │       └── m12uodkj.lottie
 │   ├── src
-│   │   ├── App.css
 │   │   ├── App.tsx
 │   │   ├── assets
-│   │   │   ├── react.svg
-│   │   │   └── vite.svg
+│   │   │   ├── fonts
+│   │   │   │   ├── Antreas.ttf
+│   │   │   │   ├── CherryRustic.otf
+│   │   │   │   ├── MyHeart.otf
+│   │   │   │   ├── ShantellSans-VariableFont.ttf
+│   │   │   │   ├── clockwise_light.ttf
+│   │   │   │   └── the-servant.ttf
+│   │   │   ├── images
+│   │   │   │   ├── Background.jpg
+│   │   │   │   ├── Logo.png
+│   │   │   │   ├── LogoN.png
+│   │   │   │   ├── suggestion1.png
+│   │   │   │   ├── suggestion10.png
+│   │   │   │   ├── suggestion11.png
+│   │   │   │   ├── suggestion12.png
+│   │   │   │   ├── suggestion13.png
+│   │   │   │   ├── suggestion14.png
+│   │   │   │   ├── suggestion15.png
+│   │   │   │   ├── suggestion16.png
+│   │   │   │   ├── suggestion2.png
+│   │   │   │   ├── suggestion3.png
+│   │   │   │   ├── suggestion4.png
+│   │   │   │   ├── suggestion5.png
+│   │   │   │   ├── suggestion6.png
+│   │   │   │   ├── suggestion7.png
+│   │   │   │   ├── suggestion8.png
+│   │   │   │   ├── suggestion9.png
+│   │   │   │   └── text.png
+│   │   │   └── stylesheets
+│   │   │       ├── Home.css
+│   │   │       ├── Recipe.css
+│   │   │       ├── Veffect.css
+│   │   │       └── updatedHome.css
+│   │   ├── components
+│   │   │   ├── Crousel.tsx
+│   │   │   ├── Home.tsx
+│   │   │   ├── LoginModal.tsx
+│   │   │   ├── RecipeModal.tsx
+│   │   │   ├── RegisterModal.tsx
+│   │   │   ├── Spinner.tsx
+│   │   │   └── ui
+│   │   │       ├── button.tsx
+│   │   │       ├── card.tsx
+│   │   │       ├── carousel.tsx
+│   │   │       ├── dialog.tsx
+│   │   │       ├── input.tsx
+│   │   │       ├── sonner.tsx
+│   │   │       └── textarea.tsx
 │   │   ├── index.css
+│   │   ├── lib
+│   │   │   ├── types.ts
+│   │   │   └── utils.ts
 │   │   ├── main.tsx
+│   │   ├── state
+│   │   │   ├── dialogSlice.tsx
+│   │   │   ├── responseSlice.tsx
+│   │   │   └── store.ts
 │   │   └── vite-env.d.ts
+│   ├── tailwind.config.js
 │   ├── tsconfig.app.json
 │   ├── tsconfig.app.tsbuildinfo
 │   ├── tsconfig.json
@@ -86,40 +164,63 @@ RemyRecipeX/
 ├── Dockerfile
 ├── LICENSE
 ├── README.md
-└── Server
-    ├── api
-    │   ├── __init__.py
-    │   └── routes
-    │       ├── __init__.py
-    │       ├── auth_routes.py
-    │       ├── gpt_routes.py
-    │       └── user_routes.py
-    ├── app.py
-    ├── config
-    │   ├── __init__.py
-    │   └── default.py
-    ├── database.py
-    ├── errors.py
-    ├── example-dotenv-file
-    ├── middleware.py
-    ├── models
-    │   ├── __init__.py
-    │   ├── auth.py
-    │   └── user.py
-    ├── mongo-init.js
-    ├── requirements.txt
-    ├── static
-    │   ├── assets
-    │   │   ├── index-DiwrgTda.css
-    │   │   ├── index-f40OySzR.js
-    │   │   ├── react-CHdo91hT.svg
-    │   │   └── vite.svg
-    │   └── index.html
-    └── web_dynamic
-        ├── __init__.py
-        └── template_renderer.py
+├── Server
+│   ├── api
+│   │   ├── __init__.py
+│   │   └── routes
+│   │       ├── __init__.py
+│   │       ├── auth_routes.py
+│   │       ├── gemi.py
+│   │       ├── gpt_routes.py
+│   │       ├── movie_routes.py
+│   │       └── user_routes.py
+│   ├── app.py
+│   ├── config
+│   │   ├── __init__.py
+│   │   └── default.py
+│   ├── database.py
+│   ├── errors.py
+│   ├── example-dotenv-file
+│   ├── maps_test.html
+│   ├── middleware.py
+│   ├── models
+│   │   ├── __init__.py
+│   │   ├── auth.py
+│   │   └── user.py
+│   ├── requirements.txt
+│   ├── static
+│   │   ├── assets
+│   │   │   ├── Background-Bq1jNvTS.jpg
+│   │   │   ├── LogoN-DntnNkqz.png
+│   │   │   ├── index-Ds1_JCfB.css
+│   │   │   ├── index-np7zopBB.js
+│   │   │   ├── suggestion1-DQh46pk3.png
+│   │   │   ├── suggestion10-BorAJkHO.png
+│   │   │   ├── suggestion11-nD4MaWa7.png
+│   │   │   ├── suggestion12-CoLSFW0W.png
+│   │   │   ├── suggestion13-BD2CNVMu.png
+│   │   │   ├── suggestion14-CAIsJVOw.png
+│   │   │   ├── suggestion15-zIvGRDFL.png
+│   │   │   ├── suggestion16-B-mwjjjG.png
+│   │   │   ├── suggestion2-BXBfSqVr.png
+│   │   │   ├── suggestion3-AOQt_3Mc.png
+│   │   │   ├── suggestion4-DLNAoKFN.png
+│   │   │   ├── suggestion5-XeveYIAI.png
+│   │   │   ├── suggestion6-Db6iMs_w.png
+│   │   │   ├── suggestion7-zaewGM4x.png
+│   │   │   ├── suggestion8-9Cm8TdxB.png
+│   │   │   ├── suggestion9-Bwlar1SB.png
+│   │   │   └── text-DXJ1yRfP.png
+│   │   ├── favicon.ico
+│   │   ├── index.html
+│   │   └── lottie
+│   │       └── m12uodkj.lottie
+│   └── web_dynamic
+│       ├── __init__.py
+│       └── template_renderer.py
+└── package-lock.json
 
-14 directories, 49 files
+24 directories, 140 files
 ```
 
 ## Setup and Installation
