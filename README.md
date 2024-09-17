@@ -31,7 +31,9 @@
 
 ## Introduction
 
-...........................
+Got some extra food on hand but dont feel like throwing it away? or maybe you just cant decide on what you want to eat for a meal today, Our ol'Friend Remy is here to help!
+Our WebApp is meant to help with food waste and helping people recycle their food instead of throwing excess food away, It would also provide with Places nearby to get any missing ingredients from the list it provides.
+Feel like watching something while eating the meal? well we got you covered, with every recipe you get a movie suggestion to enjoy while eating, So what are you waiting for? get over here and try for yourself!
 
 ## Features
 
