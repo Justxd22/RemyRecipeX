@@ -39,6 +39,7 @@ Feel like watching something while eating the meal? well we got you covered, wit
 
 - User authentication (register, login, logout)
 - Responsive design for various screen sizes
+- Fast Recipe Generation.
 
 ## Technology Stack
 
@@ -249,6 +250,7 @@ docker run -p 5000:5000 remyrecipex
 ```
 
 Enjoy :D
+On port:5000 -Make sure this port is not already in use-
 
 ## API Endpoints
 
@@ -267,6 +269,7 @@ Enjoy :D
 - `name`: String
 - `email`: String
 - `password`: String (hashed)
+- `created_at`: Date
 
 
 ## Configuration
