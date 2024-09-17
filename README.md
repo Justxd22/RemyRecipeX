@@ -252,9 +252,12 @@ Enjoy :D
 
 ## API Endpoints
 
+- POST `/api/gpt/ask`: get new recipe from leftovers
+- POST `/api/gpt/recipe`: get new recipe from suggested
+- GET  `/api/movie/ask`: get random cooking movie
 - POST `/api/auth/register`: Register a new user
 - POST `/api/auth/login`: User login
-- DELETE `/api/auth/logout`: User logout
+- GET `/api/auth/check-session`: Check Auth
 
 ## Database Schema
 
