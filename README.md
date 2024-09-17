@@ -9,11 +9,12 @@
 
 
 ## Screenshots
-![s1](.assets/s1.png)
-
-![s2](.assets/s2.png)
-
-![s3](.assets/s3.png)
+![s1](.res/s1.png)
+![s2](.res/Carosel1.png)
+![s3](.res/Carosel2.png)
+![s4](.res/Movie.png)
+![s5](.res/Register.png)
+![s6](.res/Map.png)
 
 ## Table of Contents
 
